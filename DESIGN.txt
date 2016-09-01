@@ -1,0 +1,15 @@
+Homework 1 Plan
+Charlie Wang
+qw42
+8/30/2016
+
+Genre: Puzzle
+Name (temporary): Impasse
+Background: The game is inspired by one of Valve's best selling first person shooting game: Portal (and, of course, Portal 2), except this game will be 2D with different features than just portals (and less difficult...). 
+Goal: navigate a ball across a map to reach a certain destination. 
+Mechanics: A maze with walls (or at least it kinds of looks like one) will show on the screen. Initially, the target (likely a ball) is at some place in this maze, and by pressing keys, we move the ball accordingly. The ball
+	cannot pass through the black walls.
+	There will be portals on the wall for the target to pass through, and by passing through the portal, other incidents will happen. For example, an additional wall will arise each time the target goes through a portal.
+	Alternatively, some grids will disappear or reappear when the target goes through a portal. There could be multiple pairs of portals on the walls.
+	I'm still brainstorming about more features to add to increase the difficulty as the game goes on.
+# of levels: The plan is to make at least 5 levels. Each level (or each 2 level) will upgrade the difficulty.
