@@ -47,7 +47,14 @@ public class ImpasseGame {
 		root.getChildren().add(t);
 		t.setFont(Font.font("Verdana", 30));
 		t.setFill(Color.BLACK);
-
+		
+		// Write out the author 
+		Text t2 = new Text("Created by Charlie Wang");
+		t2.setX(420);
+		t2.setY(560);
+		t.setFont(Font.font("Verdana", 20));
+		root.getChildren().add(t2);
+		
 		// Set up the board according to which level I'm in
 		switch (level) {
 		case 1:
@@ -110,11 +117,11 @@ public class ImpasseGame {
 		setBall(root, 450, 450, RADIUS);
 		setDest(root, 150, 450, RADIUS);
 
-		Portal portal1 = new Portal(100, 125, 495, 125, 1, 1, Color.ORANGE);
+		Portal portal1 = new Portal(100, 125, 495, 125, 1, 1, Color.ORANGE, 125, 150, 480, 150);
 		portal1.addDoor(105, 320, 95, 5, true);
 		portal1.addDoor(200, 105, 5, 95, false);
 		myPortal.add(portal1);
-		Portal portal2 = new Portal(100, 225, 495, 325, 1, 1, Color.BLUE);
+		Portal portal2 = new Portal(100, 225, 495, 325, 1, 1, Color.BLUE, 125, 250, 480, 350);
 		portal2.addDoor(105, 370, 95, 5, false);
 		portal2.addDoor(300, 105, 5, 95, true);
 		myPortal.add(portal2);
@@ -132,15 +139,21 @@ public class ImpasseGame {
 		setBall(root, 400, 175, RADIUS);
 		setDest(root, 303, 300, RADIUS);
 
-		Portal portal1 = new Portal(100, 150, 495, 150, 1, 1, Color.ORANGE);
+		Portal portal1 = new Portal(100, 150, 495, 150, 1, 1, Color.ORANGE, 125, 175, 480, 175);
 		portal1.addDoor(275, 105, 5, 170, true);
 		portal1.addDoor(325, 105, 5, 170, true);
 		portal1.addDoor(105, 325, 170, 5, false);
 		portal1.addDoor(280, 275, 45, 5, false);
 		myPortal.add(portal1);
-		Portal portal2 = new Portal(100, 150, 495, 150, 1, 1, Color.BLUE);
-
-		myPortal.add(portal1);
+		Portal portal2 = new Portal(150, 100, 150, 495, 0, 0, Color.BLUE, 175, 125, 175, 480);
+		portal2.addDoor(105, 275, 170, 5, true);
+		portal2.addDoor(320, 330, 5, 170, false);
+		myPortal.add(portal2);
+		Portal portal3 = new Portal(100, 425, 495, 425, 1, 1, Color.BROWN, 125, 450, 480, 450);
+		portal3.addDoor(275, 330, 5, 170, true);
+		portal3.addDoor(325, 325, 175, 5, false);
+		portal3.addDoor(325, 280, 5, 45, false);
+		myPortal.add(portal3);
 	}
 
 	public void setBall(Group root, int ballX, int ballY, int rad) {
