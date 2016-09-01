@@ -72,7 +72,8 @@ public class Portal {
 	 */
 	public void toggleVisibility() {
 		for (Door d : allMyDoor) {
-			d.myDoor.setVisible(!d.isVisible);
+			d.isVisible=!d.isVisible;
+			d.myDoor.setVisible(d.isVisible);
 		}
 	}
 

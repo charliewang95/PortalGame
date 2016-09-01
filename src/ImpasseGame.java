@@ -176,6 +176,7 @@ public class ImpasseGame {
 			for (Portal.Door d : p.allMyDoor) {
 				Shape intersect = Shape.intersect(myBall, d.myDoor);
 				if (intersect.getBoundsInLocal().getWidth() != -1 && d.isVisible) {
+					System.out.println(d.isVisible);
 					return true;
 				}
 			}
@@ -188,12 +189,21 @@ public class ImpasseGame {
 			Shape intersect1 = Shape.intersect(myBall, p.h1.rec);
 			if (intersect1.getBoundsInLocal().getWidth() != -1) {
 				myBall.setCenterX(p.myExit2X);
-				myBall.setCenterX(p.myExit2Y);
+				myBall.setCenterY(p.myExit2Y);
+				p.toggleVisibility();
+				return true;
+			}
+			Shape intersect2 = Shape.intersect(myBall, p.h2.rec);
+			if (intersect2.getBoundsInLocal().getWidth() != -1) {
+				myBall.setCenterX(p.myExit1X);
+				myBall.setCenterY(p.myExit1Y);
+				p.toggleVisibility();
+				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public boolean touchedDest() {
 		Shape intersect = Shape.intersect(myBall, myDest);
 		if (intersect.getBoundsInLocal().getWidth() != -1) {
@@ -207,25 +217,33 @@ public class ImpasseGame {
 		case RIGHT:
 			myBall.setCenterX(myBall.getCenterX() + KEY_INPUT_SPEED);
 			if (touchedWall() || touchedDoor()) {
-				myBall.setCenterX(myBall.getCenterX() - KEY_INPUT_SPEED);
+				if (!touchedPortal()) {
+					myBall.setCenterX(myBall.getCenterX() - KEY_INPUT_SPEED);
+				}
 			}
 			break;
 		case LEFT:
 			myBall.setCenterX(myBall.getCenterX() - KEY_INPUT_SPEED);
 			if (touchedWall() || touchedDoor()) {
-				myBall.setCenterX(myBall.getCenterX() + KEY_INPUT_SPEED);
+				if (!touchedPortal()) {
+					myBall.setCenterX(myBall.getCenterX() + KEY_INPUT_SPEED);
+				}
 			}
 			break;
 		case UP:
 			myBall.setCenterY(myBall.getCenterY() - KEY_INPUT_SPEED);
 			if (touchedWall() || touchedDoor()) {
-				myBall.setCenterY(myBall.getCenterY() + KEY_INPUT_SPEED);
+				if (!touchedPortal()) {
+					myBall.setCenterY(myBall.getCenterY() + KEY_INPUT_SPEED);
+				}
 			}
 			break;
 		case DOWN:
 			myBall.setCenterY(myBall.getCenterY() + KEY_INPUT_SPEED);
 			if (touchedWall() || touchedDoor()) {
-				myBall.setCenterY(myBall.getCenterY() - KEY_INPUT_SPEED);
+				if (!touchedPortal()) {
+					myBall.setCenterY(myBall.getCenterY() - KEY_INPUT_SPEED);
+				}
 			}
 			break;
 		default:
