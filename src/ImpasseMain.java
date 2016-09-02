@@ -37,7 +37,7 @@ public class ImpasseMain extends Application {
 			scene[i] = myGame[i].init(SIZE, SIZE, i);
 			myGame[i].buttonLevel.setOnAction(e -> ButtonClicked(e));
 		}
-		s.setScene(scene[1]);
+		s.setScene(scene[INITLEVEL]);
 		s.setResizable(false);
 		s.show();
 

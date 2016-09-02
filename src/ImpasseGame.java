@@ -22,7 +22,7 @@ import javafx.scene.text.Text;
  */
 public class ImpasseGame {
 	public static final String TITLE = "Impasse";
-	public static final int KEY_INPUT_SPEED = 5;
+	public static final int KEY_INPUT_SPEED = 10;
 	public static final int RADIUS = 15;
 	public static final Color ballColor = Color.GREEN;
 	public static final Color destColor = Color.RED;
@@ -121,7 +121,7 @@ public class ImpasseGame {
 		paneLevel.setLayoutY(40);
 		paneLevel.getChildren().addAll(buttonLevel);
 		root.getChildren().add(paneLevel);
-		paneLevel.setVisible(true);
+		paneLevel.setVisible(false);
 	}
 	
 	/*
@@ -210,28 +210,36 @@ public class ImpasseGame {
 	 * Map setup of level 4
 	 */
 	public void level4(Group root) {
-		//drawButton(root);
+		drawButton(root);
 		
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
 		myWall.add(new Rectangle(100, 100, 400, 5));
 		myWall.add(new Rectangle(500, 100, 5, 400));
-		myWall.add(new Rectangle(200, 100, 5, 300));
-		myWall.add(new Rectangle(400, 200, 5, 300));
-		myWall.add(new Rectangle(200, 400, 100, 5));
-		myWall.add(new Rectangle(300, 200, 100, 5));
+		myWall.add(new Rectangle(200, 100, 20, 300));
+		myWall.add(new Rectangle(400, 200, 20, 300));
+		myWall.add(new Rectangle(200, 400, 100, 20));
+		myWall.add(new Rectangle(300, 200, 100, 20));
 		setBall(root, 150, 150, RADIUS);
 		setDest(root, 450, 450, RADIUS);
 		
 		Portal portal1 = new Portal(125, 100, 395, 265, 0, 1, Color.ORANGE, 150, 125, 380, 290);
 		portal1.addDoor(105, 300, 95, 5, true);
-		portal1.addDoor(205, 200, 95, 5, false);
-		portal1.addDoor(405, 400, 95, 5, true);
+		portal1.addDoor(220, 200, 80, 5, false);
+		portal1.addDoor(420, 400, 80, 5, true);
 		myPortal.add(portal1);
 		Portal portal2 = new Portal(100, 125, 495, 265, 1, 1, Color.BLUE, 125, 150, 480, 290);
-		portal2.addDoor(200, 405, 5, 95, true);
-		portal2.addDoor(400, 105, 5, 95, true);
+		portal2.addDoor(205, 420, 5, 80, true);
+		portal2.addDoor(405, 105, 5, 95, true);
 		myPortal.add(portal2);
+		Portal portal3 = new Portal(195, 175, 275, 100, 1, 0, Color.PINK, 180, 200, 300, 125);
+		portal3.addDoor(420, 210, 80, 5, true);
+		portal3.addDoor(300, 405, 100, 5, true);
+		myPortal.add(portal3);
+	}
+	
+	public void level5(Group root) {
+		
 	}
 	
 	/*
@@ -323,6 +331,8 @@ public class ImpasseGame {
 
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
+		case SPACE:
+			
 		case RIGHT:
 			myBall.setCenterX(myBall.getCenterX() + KEY_INPUT_SPEED);
 			if (touchedWall() || touchedDoor()) {
