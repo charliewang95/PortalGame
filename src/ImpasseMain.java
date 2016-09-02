@@ -1,7 +1,11 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -13,28 +17,41 @@ import javafx.util.Duration;
  * 
  */
 public class ImpasseMain extends Application {
-	private int INITLEVEL = 3;
+	private static final int INITLEVEL = 1;
 	public static final int SIZE = 600;
 	public static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 100 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 0.1 / FRAMES_PER_SECOND;
-	private ImpasseGame myGame;
+	private Stage myStage;
+	private ImpasseGame[] myGame = new ImpasseGame[20];
+	private int currentLevel = INITLEVEL;
+	private Scene[] scene = new Scene[20];
 
 	@Override
 	public void start(Stage s) throws Exception {
-		int currentLevel = INITLEVEL;
-		myGame = new ImpasseGame();
-		s.setTitle(myGame.getTitle());
-		Scene scene = myGame.init(SIZE, SIZE, currentLevel);
-		s.setScene(scene);
+		myStage = s;
+	
+		for (int i = 1; i < 5; i++) {
+			myGame[i] = new ImpasseGame();
+			s.setTitle(myGame[i].getTitle());
+			scene[i] = myGame[i].init(SIZE, SIZE, i);
+			myGame[i].buttonLevel.setOnAction(e -> ButtonClicked(e));
+		}
+		s.setScene(scene[1]);
 		s.setResizable(false);
 		s.show();
 
-		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> myGame.step(SECOND_DELAY));
+		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> myGame[currentLevel].step(SECOND_DELAY));
 		Timeline animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
+
+	}
+
+	public void ButtonClicked(ActionEvent e) {
+		currentLevel++;
+		myStage.setScene(scene[currentLevel]);
 	}
 
 	public static void main(String[] args) {
