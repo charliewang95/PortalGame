@@ -17,7 +17,7 @@ import javafx.util.Duration;
  * 
  */
 public class ImpasseMain extends Application {
-	private static final int INITLEVEL = 1;
+	private static final int INITLEVEL = 4;
 	public static final int SIZE = 600;
 	public static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 100 / FRAMES_PER_SECOND;
@@ -30,7 +30,7 @@ public class ImpasseMain extends Application {
 	@Override
 	public void start(Stage s) throws Exception {
 		myStage = s;
-	
+
 		for (int i = 1; i < 5; i++) {
 			myGame[i] = new ImpasseGame();
 			s.setTitle(myGame[i].getTitle());
@@ -50,8 +50,15 @@ public class ImpasseMain extends Application {
 	}
 
 	public void ButtonClicked(ActionEvent e) {
-		currentLevel++;
-		myStage.setScene(scene[currentLevel]);
+		if (e.getSource() == myGame[currentLevel].buttonLevel) {
+			currentLevel++;
+			myStage.setScene(scene[currentLevel]);
+		}
+		if (e.getSource() == myGame[currentLevel].buttonReset) {
+			myGame[currentLevel] = new ImpasseGame();
+			scene[currentLevel] = myGame[currentLevel].init(SIZE, SIZE, currentLevel);
+			myStage.setScene(scene[currentLevel]);
+		}
 	}
 
 	public static void main(String[] args) {

@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 public class ImpasseGame {
 	public static final String TITLE = "Impasse";
 	public static final int KEY_INPUT_SPEED = 10;
+	public static final boolean CANGOTONEXTLEVEL = true;
 	public static final int RADIUS = 15;
 	public static final Color ballColor = Color.GREEN;
 	public static final Color destColor = Color.RED;
@@ -34,10 +35,10 @@ public class ImpasseGame {
 	private ArrayList<Rectangle> myWall = new ArrayList<Rectangle>();
 	private ArrayList<Portal> myPortal = new ArrayList<Portal>();
 	private Circle myBall, myDest;
-	
-	public Button buttonLevel;
-	public FlowPane paneLevel;
-	
+
+	public Button buttonLevel, buttonPrev, buttonReset;
+	public FlowPane paneLevel, paneReset;
+
 	public boolean hasPassed() {
 		return passed;
 	}
@@ -60,7 +61,7 @@ public class ImpasseGame {
 		myPortal.clear();
 		Group root = new Group();
 		myScene = new Scene(root, width, height, Color.WHITE);
-		
+		myScene.setFill(Color.LIGHTGRAY);
 		// Write out the level number
 		Text t = new Text("Level " + level);
 		t.setX(270);
@@ -108,28 +109,41 @@ public class ImpasseGame {
 				root.getChildren().add(d.myDoor);
 			}
 		}
-		
+
 		myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
 		return myScene;
 	}
 
-	public void drawButton(Group root) {
-		buttonLevel=new Button("Next Level");
-		paneLevel=new FlowPane();
+	public void drawNextButton(Group root) {
+		buttonLevel = new Button("Next Level");
+		paneLevel = new FlowPane();
 		paneLevel.setVgap(10);
 		paneLevel.setLayoutX(450);
 		paneLevel.setLayoutY(40);
 		paneLevel.getChildren().addAll(buttonLevel);
 		root.getChildren().add(paneLevel);
-		paneLevel.setVisible(false);
+		paneLevel.setVisible(CANGOTONEXTLEVEL);
 	}
-	
+
+	public void drawResetButton(Group root) {
+		buttonReset = new Button("Reset Level");
+		paneReset = new FlowPane();
+		paneReset.setVgap(10);
+		paneReset.setLayoutX(70);
+		paneReset.setLayoutY(40);
+		paneReset.getChildren().addAll(buttonReset);
+		root.getChildren().add(paneReset);
+		paneReset.setVisible(true);
+	}
+
 	/*
-	 * Map setup of level 1
+	 * Map setup of level 1 
+	 * Sol: O
 	 */
 	public void level1(Group root) {
-		drawButton(root);
-		
+		drawNextButton(root);
+		drawResetButton(root);
+
 		myWall.add(new Rectangle(150, 150, 5, 300));
 		myWall.add(new Rectangle(150, 450, 300, 5));
 		myWall.add(new Rectangle(150, 150, 100, 5));
@@ -148,11 +162,13 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Map setup of level 2
+	 * Map setup of level 2 
+	 * Sol: B-->OL-->B
 	 */
 	public void level2(Group root) {
-		drawButton(root);
-	
+		drawNextButton(root);
+		drawResetButton(root);
+
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
 		myWall.add(new Rectangle(100, 100, 400, 5));
@@ -173,11 +189,13 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Map setup of level 3
+	 * Map setup of level 3 
+	 * Sol: O-->OR-->B-->BU-->P-->PL
 	 */
 	public void level3(Group root) {
-		drawButton(root);
-		
+		drawNextButton(root);
+		drawResetButton(root);
+
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
 		myWall.add(new Rectangle(100, 100, 400, 5));
@@ -207,11 +225,13 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Map setup of level 4
+	 * Map setup of level 4 
+	 * Sol: P-->O-->C-->O-->P-->O-->B
 	 */
 	public void level4(Group root) {
-		drawButton(root);
-		
+		drawNextButton(root);
+		drawResetButton(root);
+
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
 		myWall.add(new Rectangle(100, 100, 400, 5));
@@ -222,13 +242,13 @@ public class ImpasseGame {
 		myWall.add(new Rectangle(300, 200, 100, 20));
 		setBall(root, 150, 150, RADIUS);
 		setDest(root, 450, 450, RADIUS);
-		
+
 		Portal portal1 = new Portal(125, 100, 395, 265, 0, 1, Color.ORANGE, 150, 125, 380, 290);
 		portal1.addDoor(105, 300, 95, 5, true);
 		portal1.addDoor(220, 200, 80, 5, false);
 		portal1.addDoor(420, 400, 80, 5, true);
 		myPortal.add(portal1);
-		Portal portal2 = new Portal(100, 125, 495, 265, 1, 1, Color.BLUE, 125, 150, 480, 290);
+		Portal portal2 = new Portal(100, 175, 495, 265, 1, 1, Color.BLUE, 125, 200, 480, 290);
 		portal2.addDoor(205, 420, 5, 80, true);
 		portal2.addDoor(405, 105, 5, 95, true);
 		myPortal.add(portal2);
@@ -236,12 +256,16 @@ public class ImpasseGame {
 		portal3.addDoor(420, 210, 80, 5, true);
 		portal3.addDoor(300, 405, 100, 5, true);
 		myPortal.add(portal3);
+		Portal portal4 = new Portal(125, 495, 215, 325, 0, 1, Color.CYAN, 150, 480, 240, 350);
+		portal4.addDoor(105, 410, 95, 5, false);
+		portal4.addDoor(420, 360, 80, 5, true);
+		myPortal.add(portal4);
 	}
-	
+
 	public void level5(Group root) {
-		
+
 	}
-	
+
 	/*
 	 * Set the location of the ball (player)
 	 */
@@ -332,7 +356,7 @@ public class ImpasseGame {
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
 		case SPACE:
-			
+
 		case RIGHT:
 			myBall.setCenterX(myBall.getCenterX() + KEY_INPUT_SPEED);
 			if (touchedWall() || touchedDoor()) {
@@ -380,7 +404,7 @@ public class ImpasseGame {
 		default:
 		}
 	}
-	
+
 	public Object step(double secondDelay) {
 		return null;
 	}
