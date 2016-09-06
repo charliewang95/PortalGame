@@ -18,7 +18,7 @@ import javafx.util.Duration;
  * 
  */
 public class ImpasseMain extends Application {
-	private static final int INITLEVEL = 1;
+	private static final int INITLEVEL = 2;
 	public static final int SIZE = 600;
 	public static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 100 / FRAMES_PER_SECOND;
@@ -35,14 +35,11 @@ public class ImpasseMain extends Application {
 		myGame[0] = new ImpasseGame();
 		scene[0] = myGame[0].init(SIZE, SIZE, 0);
 		myGame[0].buttonBegin.setOnAction(e -> ButtonClicked(e));
-		for (int i = 1; i < 6; i++) {
+		for (int i = 1; i < 8; i++) {
 			myGame[i] = new ImpasseGame();
 			s.setTitle(myGame[i].getTitle());
 			scene[i] = myGame[i].init(SIZE, SIZE, i);
-			myGame[i].drawNextButton();
-			myGame[i].drawResetButton();
 			myGame[i].buttonLevel.setOnAction(e -> ButtonClicked(e));
-			myGame[i].buttonReset.setOnAction(e -> ButtonClicked(e));
 		}
 		s.setScene(scene[INITLEVEL]);
 		s.setResizable(false);
@@ -56,19 +53,11 @@ public class ImpasseMain extends Application {
 	}
 
 	public void ButtonClicked(ActionEvent e) {
-		System.out.println("x");
-		if (e.getSource() == myGame[currentLevel].buttonLevel) {
+		if (e.getSource() == myGame[currentLevel].buttonLevel || e.getSource() == myGame[0].buttonBegin) {
 			currentLevel++;
 			myStage.setScene(scene[currentLevel]);
 		}
-		if (e.getSource() == myGame[0].buttonBegin) {
-			myStage.setScene(scene[1]);
-		}
-		if (e.getSource() == myGame[currentLevel].buttonReset) {
-			myGame[currentLevel] = new ImpasseGame();
-			scene[currentLevel] = myGame[currentLevel].init(SIZE, SIZE, currentLevel);
-			myStage.setScene(scene[currentLevel]);
-		}
+		
 	}
 	
 	public static void main(String[] args) {

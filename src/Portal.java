@@ -9,6 +9,7 @@ public class Portal {
 	private static final int WIDTH = 10;
 	public int myExit1X, myExit1Y, myExit2X, myExit2Y;
 	public HalfPortal h1, h2;
+	public int count=0;
 	public Color myColor;
 	public ArrayList<Door> allMyDoor = new ArrayList<Door>();
 
@@ -19,6 +20,7 @@ public class Portal {
 	public class Door {
 		public Rectangle myDoor;
 		public boolean isVisible;
+		public boolean initVisible;
 
 		public Door(int doorX, int doorY, int length, int width, Color c) {
 			myDoor = new Rectangle(doorX, doorY, length, width);
@@ -71,6 +73,12 @@ public class Portal {
 	 * toggle the visibility of each door in the same set of portal
 	 */
 	public void toggleVisibility() {
+		if (count==1) {
+			count=0;
+		}
+		else if(count==0) {
+			count=1;
+		}
 		for (Door d : allMyDoor) {
 			d.isVisible=!d.isVisible;
 			d.myDoor.setVisible(d.isVisible);
@@ -85,6 +93,7 @@ public class Portal {
 		Door d1 = new Door(doorX, doorY, length, width, myColor);
 		d1.myDoor.setVisible(visible);
 		d1.isVisible = visible;
+		d1.initVisible = visible;
 		allMyDoor.add(d1);
 	}
 }
