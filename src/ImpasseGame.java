@@ -35,6 +35,7 @@ public class ImpasseGame {
 	private ArrayList<Rectangle> myWall = new ArrayList<Rectangle>();
 	private ArrayList<Portal> myPortal = new ArrayList<Portal>();
 	private Circle myBall, myDest;
+	private Group root;
 
 	public Button buttonLevel, buttonBegin, buttonReset;
 	private Text t3;
@@ -59,7 +60,7 @@ public class ImpasseGame {
 		myLevel = level;
 		myWall.clear();
 		myPortal.clear();
-		Group root = new Group();
+		root = new Group();
 		myScene = new Scene(root, width, height, Color.WHITE);
 		myScene.setFill(Color.LIGHTGRAY);
 		// Write out the level number
@@ -79,43 +80,28 @@ public class ImpasseGame {
 		t2.setFont(Font.font("Verdana", 12));
 		root.getChildren().add(t2);
 
-		//Write Win message
-		DropShadow ds = new DropShadow();
-		ds.setOffsetY(8.0f);
-		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-
-		t3 = new Text();
-		t3.setEffect(ds);
-		t3.setX(50.0f);
-		t3.setY(270.0f);
-		t3.setFill(Color.RED);
-		t3.setText("Congratulations!");
-		t3.setFont(Font.font(null, FontWeight.BOLD, 60));
-		t3.setVisible(false);
-		root.getChildren().add(t3);
-		
 		// Set up the board according to which level I'm in
 		switch (level) {
 		case 0:
-			level0(root);
+			level0();
 			break;
 		case 1:
-			level1(root);
+			level1();
 			break;
 		case 2:
-			level2(root);
+			level2();
 			break;
 		case 3:
-			level3(root);
+			level3();
 			break;
 		case 4:
-			level4(root);
+			level4();
 			break;
 		case 5:
-			level5(root);
+			level5();
 			break;
 		default:
-			level1(root);
+			level1();
 		}
 
 		// Show all the walls
@@ -137,7 +123,7 @@ public class ImpasseGame {
 		return myScene;
 	}
 
-	public void drawNextButton(Group root) {
+	public void drawNextButton() {
 		buttonLevel = new Button("Next Level");
 		buttonLevel.setLayoutX(450);
 		buttonLevel.setLayoutY(40);
@@ -145,7 +131,7 @@ public class ImpasseGame {
 		buttonLevel.setVisible(CANGOTONEXTLEVEL);
 	}
 
-	public void drawResetButton(Group root) {
+	public void drawResetButton() {
 		buttonReset = new Button("Reset Level");
 		buttonReset.setLayoutX(70);
 		buttonReset.setLayoutY(40);
@@ -153,7 +139,7 @@ public class ImpasseGame {
 		buttonReset.setVisible(true);
 	}
 
-	public void level0(Group root) {
+	public void level0() {
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(8.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
@@ -173,15 +159,18 @@ public class ImpasseGame {
 		buttonBegin.setScaleX(3);
 		buttonBegin.setScaleY(3);
 		root.getChildren().add(buttonBegin);
-		
+
 	}
 
+	public void levelprep1() {
+		
+	}
 	/*
 	 * Map setup of level 1 Sol: O
 	 */
-	public void level1(Group root) {
-		drawNextButton(root);
-		drawResetButton(root);
+	public void level1() {
+		drawNextButton();
+		drawResetButton();
 
 		myWall.add(new Rectangle(150, 150, 5, 300));
 		myWall.add(new Rectangle(150, 450, 300, 5));
@@ -203,9 +192,9 @@ public class ImpasseGame {
 	/*
 	 * Map setup of level 2 Sol: B-->OL-->B
 	 */
-	public void level2(Group root) {
-		drawNextButton(root);
-		drawResetButton(root);
+	public void level2() {
+		drawNextButton();
+		drawResetButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -229,9 +218,9 @@ public class ImpasseGame {
 	/*
 	 * Map setup of level 3 Sol: O-->OR-->B-->BU-->P-->PL
 	 */
-	public void level3(Group root) {
-		drawNextButton(root);
-		drawResetButton(root);
+	public void level3() {
+		drawNextButton();
+		drawResetButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -264,9 +253,9 @@ public class ImpasseGame {
 	/*
 	 * Map setup of level 4 Sol: P-->O-->C-->O-->P-->O-->B
 	 */
-	public void level4(Group root) {
-		drawNextButton(root);
-		drawResetButton(root);
+	public void level4() {
+		drawNextButton();
+		drawResetButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -301,9 +290,9 @@ public class ImpasseGame {
 	/*
 	 * Map setup of level 5 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
 	 */
-	public void level5(Group root) {
-		drawNextButton(root);
-		drawResetButton(root);
+	public void level5() {
+		drawNextButton();
+		drawResetButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -492,10 +481,26 @@ public class ImpasseGame {
 		}
 	}
 
+	/*
+	 * Print the winning message
+	 */
 	private void winMessage() {
+		// Write Win message
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(8.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+		t3 = new Text();
+		t3.setEffect(ds);
+		t3.setX(50.0f);
+		t3.setY(270.0f);
+		t3.setFill(Color.RED);
+		t3.setText("Congratulations!");
+		t3.setFont(Font.font(null, FontWeight.BOLD, 60));
+		root.getChildren().add(t3);
 		t3.setVisible(true);
 	}
-	
+
 	public Object step(double secondDelay) {
 		return null;
 	}
