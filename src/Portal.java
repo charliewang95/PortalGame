@@ -50,6 +50,12 @@ public class Portal {
 	/*
 	 * Portal constructor
 	 * A portal is consisted of 2 half-portals.
+	 * port1X, port1Y -- the first half-portal's coordinates
+	 * port2X, port2Y -- the second half-portal's coordinates
+	 * pos1, pos2 -- whether the half-portal(s) is horizontal or vertical
+	 * c -- the color of the portal (and its doors)
+	 * exit1X, exit1Y -- the coordinates to exit half-portal 1 
+	 * exit2X, exit2Y -- the coordinates to exit half-portal 2  
 	 */
 	public Portal(int port1X, int port1Y, int port2X, int port2Y, int pos1, int pos2, Color c, 
 			int exit1X, int exit1Y, int exit2X, int exit2Y) {
