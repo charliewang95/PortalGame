@@ -1,13 +1,11 @@
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -39,6 +37,7 @@ public class ImpasseGame {
 	private Circle myBall, myDest;
 
 	public Button buttonLevel, buttonBegin, buttonReset;
+	private Text t3;
 
 	public boolean hasPassed() {
 		return passed;
@@ -69,7 +68,7 @@ public class ImpasseGame {
 			t.setX(270);
 			t.setY(60);
 			root.getChildren().add(t);
-			t.setFont(Font.font("Verdana", 40));
+			t.setFont(Font.font("Verdana", 20));
 			t.setFill(Color.BLACK);
 		}
 
@@ -80,6 +79,21 @@ public class ImpasseGame {
 		t2.setFont(Font.font("Verdana", 12));
 		root.getChildren().add(t2);
 
+		//Write Win message
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(8.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+		t3 = new Text();
+		t3.setEffect(ds);
+		t3.setX(50.0f);
+		t3.setY(270.0f);
+		t3.setFill(Color.RED);
+		t3.setText("Congratulations!");
+		t3.setFont(Font.font(null, FontWeight.BOLD, 60));
+		t3.setVisible(false);
+		root.getChildren().add(t3);
+		
 		// Set up the board according to which level I'm in
 		switch (level) {
 		case 0:
@@ -159,6 +173,7 @@ public class ImpasseGame {
 		buttonBegin.setScaleX(3);
 		buttonBegin.setScaleY(3);
 		root.getChildren().add(buttonBegin);
+		
 	}
 
 	/*
@@ -284,7 +299,7 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Map setup of level 4 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
+	 * Map setup of level 5 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
 	 */
 	public void level5(Group root) {
 		drawNextButton(root);
@@ -421,8 +436,6 @@ public class ImpasseGame {
 
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
-		case SPACE:
-
 		case RIGHT:
 			myBall.setCenterX(myBall.getCenterX() + KEY_INPUT_SPEED);
 			if (touchedWall() || touchedDoor()) {
@@ -431,7 +444,9 @@ public class ImpasseGame {
 				}
 			}
 			if (touchedDest()) {
+				myBall.setCenterX(myBall.getCenterX() - KEY_INPUT_SPEED);
 				buttonLevel.setVisible(true);
+				winMessage();
 			}
 			break;
 		case LEFT:
@@ -442,7 +457,9 @@ public class ImpasseGame {
 				}
 			}
 			if (touchedDest()) {
+				myBall.setCenterX(myBall.getCenterX() + KEY_INPUT_SPEED);
 				buttonLevel.setVisible(true);
+				winMessage();
 			}
 			break;
 		case UP:
@@ -453,7 +470,9 @@ public class ImpasseGame {
 				}
 			}
 			if (touchedDest()) {
+				myBall.setCenterY(myBall.getCenterY() + KEY_INPUT_SPEED);
 				buttonLevel.setVisible(true);
+				winMessage();
 			}
 			break;
 		case DOWN:
@@ -464,13 +483,19 @@ public class ImpasseGame {
 				}
 			}
 			if (touchedDest()) {
+				myBall.setCenterY(myBall.getCenterY() - KEY_INPUT_SPEED);
 				buttonLevel.setVisible(true);
+				winMessage();
 			}
 			break;
 		default:
 		}
 	}
 
+	private void winMessage() {
+		t3.setVisible(true);
+	}
+	
 	public Object step(double secondDelay) {
 		return null;
 	}

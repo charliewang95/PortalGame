@@ -24,13 +24,13 @@ public class ImpasseMain extends Application {
 	private static final double SECOND_DELAY = 0.1 / FRAMES_PER_SECOND;
 	private Stage myStage;
 	private ImpasseGame[] myGame = new ImpasseGame[20];
-	private int currentLevel = INITLEVEL;
+	private int currentLevel;
 	private Scene[] scene = new Scene[20];
 
 	@Override
 	public void start(Stage s) throws Exception {
 		myStage = s;
-
+		currentLevel=INITLEVEL;
 		for (int i = 0; i < 6; i++) {
 			myGame[i] = new ImpasseGame();
 			s.setTitle(myGame[i].getTitle());
