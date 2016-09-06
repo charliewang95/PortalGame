@@ -1,9 +1,14 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -27,6 +32,7 @@ public class ImpasseGame {
 	private static final Color ballColor = Color.GREEN;
 	private static final Color destColor = Color.RED;
 	private int myLevel, ballInitX, ballInitY;
+	public int levelChosen;
 	private Scene myScene;
 	private ArrayList<Rectangle> myWall = new ArrayList<Rectangle>();
 	private ArrayList<Portal> myPortal = new ArrayList<Portal>();
@@ -53,17 +59,11 @@ public class ImpasseGame {
 		root = new Group();
 		myScene = new Scene(root, width, height, Color.WHITE);
 		myScene.setFill(Color.LIGHTGRAY);
-		
-		// Write out the level number
+
+		// write all the stuff on the screen
 		writeLevel();
-
-		// Write out the author
 		writeAuthor();
-
-		// Write out the hint text
 		writeHintText();
-
-		// Write out help text
 		writeHelpText();
 
 		// Set up the board according to which level I'm in
@@ -155,7 +155,7 @@ public class ImpasseGame {
 
 	public void writeHelpText() {
 		if (myLevel != 0) {
-			Text t6 = new Text("Press \"up\", \"up\", \"up\", \"up\" to move");
+			Text t6 = new Text("Press \u2190, \u2191, \u2192, \u2193 to move");
 			Text t4 = new Text("Press \"R\" to reset the level");
 			Text t5 = new Text("Press \"H\" to show/hide the solution");
 			t6.setX(50);
@@ -181,10 +181,33 @@ public class ImpasseGame {
 		buttonLevel.setVisible(CANGOTONEXTLEVEL);
 	}
 
+	public void openDialog () {
+		List<String> choices = new ArrayList<>();
+		for (int i=0; i<8; i++) {
+			Integer integer = i;
+			choices.add(integer.toString());
+		}
+
+		ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices);
+		dialog.setTitle(null);
+		dialog.setHeaderText(null);
+		dialog.setContentText("Choose your level:");
+
+		// Traditional way to get the response value.
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()){
+		    levelChosen = Integer.parseInt(result.get());
+		}
+	}
+	
 	/*
 	 * Show Main screen
 	 */
 	public void level0() {
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
+		ImageView iv1 = new ImageView(image);
+        root.getChildren().add(iv1);
+		
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(8.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
@@ -198,9 +221,9 @@ public class ImpasseGame {
 		t.setFont(Font.font(null, FontWeight.BOLD, 90));
 		root.getChildren().add(t);
 
-		buttonBegin = new Button("PLAY!!");
-		buttonBegin.setLayoutX(270);
-		buttonBegin.setLayoutY(440);
+		buttonBegin = new Button("New Game");
+		buttonBegin.setLayoutX(260);
+		buttonBegin.setLayoutY(320);
 		buttonBegin.setScaleX(3);
 		buttonBegin.setScaleY(3);
 		root.getChildren().add(buttonBegin);
@@ -325,7 +348,7 @@ public class ImpasseGame {
 		t1.setScaleY(2.2);
 		t1.setFill(Color.GREEN);
 		root.getChildren().add(t1);
-		Text t2 = new Text("Closed doors \nof this color \nwill open...");
+		Text t2 = new Text("Closed doors \nof the same color \nwill open...");
 		t2.setX(30);
 		t2.setY(340);
 		t2.setScaleX(1.2);
@@ -680,7 +703,7 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Reset the board
+	 * Reset the board to its initial state
 	 */
 	public void reset() {
 		for (Portal p : myPortal) {
@@ -697,11 +720,7 @@ public class ImpasseGame {
 	 * show the solution
 	 */
 	public void showHint() {
-		if (this.hintText.isVisible()) {
-			this.hintText.setVisible(false);
-		} else {
-			this.hintText.setVisible(true);
-		}
+		this.hintText.setVisible(!this.hintText.isVisible());
 	}
 
 	public void step(double secondDelay) {
