@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
@@ -12,6 +13,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /**
@@ -36,8 +38,7 @@ public class ImpasseGame {
 	private ArrayList<Portal> myPortal = new ArrayList<Portal>();
 	private Circle myBall, myDest;
 
-	public Button buttonLevel, buttonPrev, buttonReset;
-	public FlowPane paneLevel, paneReset;
+	public Button buttonLevel, buttonBegin, buttonReset;
 
 	public boolean hasPassed() {
 		return passed;
@@ -63,22 +64,27 @@ public class ImpasseGame {
 		myScene = new Scene(root, width, height, Color.WHITE);
 		myScene.setFill(Color.LIGHTGRAY);
 		// Write out the level number
-		Text t = new Text("Level " + level);
-		t.setX(270);
-		t.setY(60);
-		root.getChildren().add(t);
-		t.setFont(Font.font("Verdana", 40));
-		t.setFill(Color.BLACK);
+		if (level != 0) {
+			Text t = new Text("Level " + level);
+			t.setX(270);
+			t.setY(60);
+			root.getChildren().add(t);
+			t.setFont(Font.font("Verdana", 40));
+			t.setFill(Color.BLACK);
+		}
 
 		// Write out the author
 		Text t2 = new Text("Created by Charlie Wang");
-		t2.setX(420);
+		t2.setX(410);
 		t2.setY(560);
-		t.setFont(Font.font("Verdana", 20));
+		t2.setFont(Font.font("Verdana", 12));
 		root.getChildren().add(t2);
 
 		// Set up the board according to which level I'm in
 		switch (level) {
+		case 0:
+			level0(root);
+			break;
 		case 1:
 			level1(root);
 			break;
@@ -119,29 +125,44 @@ public class ImpasseGame {
 
 	public void drawNextButton(Group root) {
 		buttonLevel = new Button("Next Level");
-		paneLevel = new FlowPane();
-		paneLevel.setVgap(10);
-		paneLevel.setLayoutX(450);
-		paneLevel.setLayoutY(40);
-		paneLevel.getChildren().addAll(buttonLevel);
-		root.getChildren().add(paneLevel);
-		paneLevel.setVisible(CANGOTONEXTLEVEL);
+		buttonLevel.setLayoutX(450);
+		buttonLevel.setLayoutY(40);
+		root.getChildren().add(buttonLevel);
+		buttonLevel.setVisible(CANGOTONEXTLEVEL);
 	}
 
 	public void drawResetButton(Group root) {
 		buttonReset = new Button("Reset Level");
-		paneReset = new FlowPane();
-		paneReset.setVgap(10);
-		paneReset.setLayoutX(70);
-		paneReset.setLayoutY(40);
-		paneReset.getChildren().addAll(buttonReset);
-		root.getChildren().add(paneReset);
-		paneReset.setVisible(true);
+		buttonReset.setLayoutX(70);
+		buttonReset.setLayoutY(40);
+		root.getChildren().add(buttonReset);
+		buttonReset.setVisible(true);
+	}
+
+	public void level0(Group root) {
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(8.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+		Text t = new Text();
+		t.setEffect(ds);
+		t.setX(90.0f);
+		t.setY(170.0f);
+		t.setFill(Color.RED);
+		t.setText("IMPASSE");
+		t.setFont(Font.font(null, FontWeight.BOLD, 90));
+		root.getChildren().add(t);
+
+		buttonBegin = new Button("PLAY!!");
+		buttonBegin.setLayoutX(270);
+		buttonBegin.setLayoutY(440);
+		buttonBegin.setScaleX(3);
+		buttonBegin.setScaleY(3);
+		root.getChildren().add(buttonBegin);
 	}
 
 	/*
-	 * Map setup of level 1 
-	 * Sol: O
+	 * Map setup of level 1 Sol: O
 	 */
 	public void level1(Group root) {
 		drawNextButton(root);
@@ -165,8 +186,7 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Map setup of level 2 
-	 * Sol: B-->OL-->B
+	 * Map setup of level 2 Sol: B-->OL-->B
 	 */
 	public void level2(Group root) {
 		drawNextButton(root);
@@ -192,8 +212,7 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Map setup of level 3 
-	 * Sol: O-->OR-->B-->BU-->P-->PL
+	 * Map setup of level 3 Sol: O-->OR-->B-->BU-->P-->PL
 	 */
 	public void level3(Group root) {
 		drawNextButton(root);
@@ -228,8 +247,7 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Map setup of level 4 
-	 * Sol: P-->O-->C-->O-->P-->O-->B
+	 * Map setup of level 4 Sol: P-->O-->C-->O-->P-->O-->B
 	 */
 	public void level4(Group root) {
 		drawNextButton(root);
@@ -265,17 +283,20 @@ public class ImpasseGame {
 		myPortal.add(portal4);
 	}
 
+	/*
+	 * Map setup of level 4 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
+	 */
 	public void level5(Group root) {
 		drawNextButton(root);
 		drawResetButton(root);
-		
+
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
 		myWall.add(new Rectangle(100, 100, 400, 5));
 		myWall.add(new Rectangle(500, 100, 5, 400));
 		setBall(root, 150, 150, RADIUS);
 		setDest(root, 308, 300, RADIUS);
-		
+
 		Portal portal1 = new Portal(100, 125, 495, 425, 1, 1, Color.ORANGE, 125, 150, 480, 450);
 		Portal portal2 = new Portal(100, 425, 435, 495, 1, 0, Color.BLUE, 125, 450, 460, 480);
 		Portal portal3 = new Portal(125, 495, 435, 100, 0, 0, Color.PINK, 150, 480, 460, 125);
@@ -288,27 +309,27 @@ public class ImpasseGame {
 		myPortal.add(portal4);
 		myPortal.add(portal5);
 		myPortal.add(portal6);
-		
+
 		portal1.addDoor(105, 190, 395, 5, true);
 		portal2.addDoor(105, 210, 395, 5, true);
 		portal6.addDoor(105, 230, 395, 5, true);
 		portal4.addDoor(105, 250, 395, 5, true);
-		
+
 		portal5.addDoor(105, 350, 395, 5, true);
 		portal4.addDoor(105, 370, 395, 5, true);
 		portal1.addDoor(105, 390, 395, 5, true);
 		portal6.addDoor(105, 410, 395, 5, false);
-		
+
 		portal1.addDoor(190, 105, 5, 395, true);
 		portal2.addDoor(210, 105, 5, 395, true);
 		portal3.addDoor(230, 105, 5, 395, true);
 		portal4.addDoor(250, 105, 5, 395, true);
-		
+
 		portal5.addDoor(350, 105, 5, 395, true);
 		portal6.addDoor(375, 105, 5, 395, true);
 		portal4.addDoor(395, 105, 5, 395, true);
 		portal2.addDoor(415, 105, 5, 395, false);
-		
+
 	}
 
 	/*
@@ -410,7 +431,7 @@ public class ImpasseGame {
 				}
 			}
 			if (touchedDest()) {
-				paneLevel.setVisible(true);
+				buttonLevel.setVisible(true);
 			}
 			break;
 		case LEFT:
@@ -421,7 +442,7 @@ public class ImpasseGame {
 				}
 			}
 			if (touchedDest()) {
-				paneLevel.setVisible(true);
+				buttonLevel.setVisible(true);
 			}
 			break;
 		case UP:
@@ -432,7 +453,7 @@ public class ImpasseGame {
 				}
 			}
 			if (touchedDest()) {
-				paneLevel.setVisible(true);
+				buttonLevel.setVisible(true);
 			}
 			break;
 		case DOWN:
@@ -443,7 +464,7 @@ public class ImpasseGame {
 				}
 			}
 			if (touchedDest()) {
-				paneLevel.setVisible(true);
+				buttonLevel.setVisible(true);
 			}
 			break;
 		default:
