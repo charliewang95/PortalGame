@@ -91,6 +91,9 @@ public class ImpasseGame {
 		case 4:
 			level4(root);
 			break;
+		case 5:
+			level5(root);
+			break;
 		default:
 			level1(root);
 		}
@@ -263,7 +266,49 @@ public class ImpasseGame {
 	}
 
 	public void level5(Group root) {
-
+		drawNextButton(root);
+		drawResetButton(root);
+		
+		myWall.add(new Rectangle(100, 100, 5, 400));
+		myWall.add(new Rectangle(100, 500, 405, 5));
+		myWall.add(new Rectangle(100, 100, 400, 5));
+		myWall.add(new Rectangle(500, 100, 5, 400));
+		setBall(root, 150, 150, RADIUS);
+		setDest(root, 308, 300, RADIUS);
+		
+		Portal portal1 = new Portal(100, 125, 495, 425, 1, 1, Color.ORANGE, 125, 150, 480, 450);
+		Portal portal2 = new Portal(100, 425, 435, 495, 1, 0, Color.BLUE, 125, 450, 460, 480);
+		Portal portal3 = new Portal(125, 495, 435, 100, 0, 0, Color.PINK, 150, 480, 460, 125);
+		Portal portal4 = new Portal(495, 125, 285, 100, 1, 0, Color.GREY, 480, 150, 310, 125);
+		Portal portal5 = new Portal(125, 100, 495, 280, 0, 1, Color.PURPLE, 150, 125, 480, 305);
+		Portal portal6 = new Portal(280, 495, 100, 280, 0, 1, Color.BROWN, 305, 480, 125, 305);
+		myPortal.add(portal1);
+		myPortal.add(portal2);
+		myPortal.add(portal3);
+		myPortal.add(portal4);
+		myPortal.add(portal5);
+		myPortal.add(portal6);
+		
+		portal1.addDoor(105, 190, 395, 5, true);
+		portal2.addDoor(105, 210, 395, 5, true);
+		portal6.addDoor(105, 230, 395, 5, true);
+		portal4.addDoor(105, 250, 395, 5, true);
+		
+		portal5.addDoor(105, 350, 395, 5, true);
+		portal4.addDoor(105, 370, 395, 5, true);
+		portal1.addDoor(105, 390, 395, 5, true);
+		portal6.addDoor(105, 410, 395, 5, false);
+		
+		portal1.addDoor(190, 105, 5, 395, true);
+		portal2.addDoor(210, 105, 5, 395, true);
+		portal3.addDoor(230, 105, 5, 395, true);
+		portal4.addDoor(250, 105, 5, 395, true);
+		
+		portal5.addDoor(350, 105, 5, 395, true);
+		portal6.addDoor(375, 105, 5, 395, true);
+		portal4.addDoor(395, 105, 5, 395, true);
+		portal2.addDoor(415, 105, 5, 395, false);
+		
 	}
 
 	/*
