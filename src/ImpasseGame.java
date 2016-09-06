@@ -86,7 +86,7 @@ public class ImpasseGame {
 			level0();
 			break;
 		case 1:
-			level1();
+			levelprep1();
 			break;
 		case 2:
 			level2();
@@ -163,8 +163,34 @@ public class ImpasseGame {
 	}
 
 	public void levelprep1() {
+		drawNextButton();
+		drawResetButton();
+		
+		myWall.add(new Rectangle(150, 250, 300, 5));
+		myWall.add(new Rectangle(150, 350, 300, 5));
+		myWall.add(new Rectangle(150, 250, 5, 100));
+		myWall.add(new Rectangle(450, 250, 5, 105));
+		myWall.add(new Rectangle(275, 250, 5, 100));
+		myWall.add(new Rectangle(325, 250, 5, 105));
+		
+		setBall(root, 175, 300, RADIUS);
+		setDest(root, 425, 300, RADIUS);
+		Portal portal1 = new Portal(270, 280, 325, 280, 1, 1, Color.ORANGE, 255, 300, 350, 300);
+		myPortal.add(portal1);
+		
+		Text t1= new Text("A portal wil transport you to another place...");
+		t1.setX(160);
+		t1.setY(180);
+		t1.setScaleX(1.5);
+		t1.setScaleY(1.5);
+		t1.setFill(Color.GREEN);
+		root.getChildren().add(t1);
+	}
+
+	public void levelprep2() {
 		
 	}
+	
 	/*
 	 * Map setup of level 1 Sol: O
 	 */
