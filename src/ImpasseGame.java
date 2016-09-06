@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,17 +20,14 @@ import javafx.scene.text.Text;
  * 
  */
 public class ImpasseGame {
-	public static final String TITLE = "Impasse";
-	public static final int KEY_INPUT_SPEED = 10;
-	public static final boolean CANGOTONEXTLEVEL = true;
-	public static final int RADIUS = 15;
-	public static final Color ballColor = Color.GREEN;
-	public static final Color destColor = Color.RED;
-	public int myLevel, ballInitX, ballInitY;
-	public boolean passed = false;
-	public String myTitle;
+	private static final String TITLE = "Impasse";
+	private static final int KEY_INPUT_SPEED = 10;
+	private static final boolean CANGOTONEXTLEVEL = true;
+	private static final int RADIUS = 15;
+	private static final Color ballColor = Color.GREEN;
+	private static final Color destColor = Color.RED;
+	private int myLevel, ballInitX, ballInitY;
 	private Scene myScene;
-	private int myWidth, myHeight;
 	private ArrayList<Rectangle> myWall = new ArrayList<Rectangle>();
 	private ArrayList<Portal> myPortal = new ArrayList<Portal>();
 	private Circle myBall, myDest;
@@ -39,10 +35,6 @@ public class ImpasseGame {
 
 	public Button buttonLevel, buttonBegin, buttonReset;
 	private Text t3, hintText;
-
-	public boolean hasPassed() {
-		return passed;
-	}
 
 	/*
 	 * returns the title of the game
@@ -55,23 +47,15 @@ public class ImpasseGame {
 	 * Initialize the board, draws the map, walls, portals, doors, and balls
 	 */
 	public Scene init(int width, int height, int level) {
-		myWidth = width;
-		myHeight = height;
 		myLevel = level;
 		myWall.clear();
 		myPortal.clear();
 		root = new Group();
 		myScene = new Scene(root, width, height, Color.WHITE);
 		myScene.setFill(Color.LIGHTGRAY);
+		
 		// Write out the level number
-		if (level != 0) {
-			Text t = new Text("Level " + level);
-			t.setX(270);
-			t.setY(60);
-			root.getChildren().add(t);
-			t.setFont(Font.font("Verdana", 20));
-			t.setFill(Color.BLACK);
-		}
+		writeLevel();
 
 		// Write out the author
 		writeAuthor();
@@ -131,10 +115,21 @@ public class ImpasseGame {
 			level5();
 			break;
 		default:
-			level1();
+			level0();
 		}
 	}
 
+	public void writeLevel() {
+		if (myLevel != 0) {
+			Text t = new Text("Level " + myLevel);
+			t.setX(270);
+			t.setY(60);
+			root.getChildren().add(t);
+			t.setFont(Font.font("Verdana", 20));
+			t.setFill(Color.BLACK);
+		}
+	}
+	
 	public void writeAuthor() {
 		Text t2 = new Text("Created by Charlie Wang");
 		t2.setX(410);
@@ -175,6 +170,9 @@ public class ImpasseGame {
 		buttonLevel.setVisible(CANGOTONEXTLEVEL);
 	}
 
+	/*
+	 * Show Main screen
+	 */
 	public void level0() {
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(8.0f);
@@ -243,11 +241,19 @@ public class ImpasseGame {
 		setDest(root, 250, 450, RADIUS);
 
 		Portal portal1 = new Portal(125, 100, 495, 225, 0, 1, Color.ORANGE, 150, 125, 480, 250);
-		Portal portal2 = new Portal(225, 495, 495, 325, 0, 1, Color.BLUE, 150, 480, 480, 350);
-		Portal portal3 = new Portal(225, 200, 495, 425, 0, 1, Color.GREY, 150, 225, 480, 450);
+		Portal portal2 = new Portal(225, 495, 495, 325, 0, 1, Color.BLUE, 250, 480, 480, 350);
+		Portal portal3 = new Portal(225, 200, 495, 425, 0, 1, Color.GREY, 250, 225, 480, 450);
+		Portal portal4 = new Portal(425, 200, 100, 325, 0, 1, Color.BROWN, 450, 225, 125, 350);
+		Portal portal5 = new Portal(325, 200, 325, 495, 0, 0, Color.PINK, 350, 225, 350, 480);
+		Portal portal6 = new Portal(195, 125, 125, 495, 1, 0, Color.PURPLE, 180, 150, 150, 480);
+		Portal portal7 = new Portal(100, 425, 425, 495, 1, 0, Color.LIGHTGREEN, 125, 450, 450, 480);
 		myPortal.add(portal1);
 		myPortal.add(portal2);
 		myPortal.add(portal3);
+		myPortal.add(portal4);
+		myPortal.add(portal5);
+		myPortal.add(portal6);
+		myPortal.add(portal7);
 
 		Text t1 = new Text("Only portals of the same \ncolor are connected...");
 		t1.setX(290);
@@ -256,6 +262,8 @@ public class ImpasseGame {
 		t1.setScaleY(1.5);
 		t1.setFill(Color.GREEN);
 		root.getChildren().add(t1);
+		
+		hintText.setText("Solution: Purple -> \nGreen -> Blue");
 	}
 
 	/*
