@@ -26,10 +26,10 @@ import javafx.scene.text.Text;
  */
 public class ImpasseGame {
 	private static final String TITLE = "Impasse";
-	private static final int KEY_INPUT_SPEED = 20; //the moving speed of the green ball
-	private static final boolean CANGOTONEXTLEVEL = false; //changing this will change whether the player 
-														   //can go to the next level without finishing the current one
-	private static final int RADIUS = 15; //the radius of the balls
+	private static final int KEY_INPUT_SPEED = 15; // the moving speed of the green ball
+	private static final boolean CANGOTONEXTLEVEL = false; // changing this will change whether the player can go to the
+															// next level without finishing the current one
+	private static final int RADIUS = 15; // the radius of the balls
 	private static final Color ballColor = Color.GREEN;
 	private static final Color destColor = Color.RED;
 	private int myLevel, ballInitX, ballInitY;
@@ -54,7 +54,7 @@ public class ImpasseGame {
 	 * Initialize the board, draws the map, walls, portals, doors, and balls
 	 */
 	public Scene init(int width, int height, int level) {
-		
+
 		myLevel = level;
 		myWall.clear();
 		myPortal.clear();
@@ -65,7 +65,7 @@ public class ImpasseGame {
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("light_texture2291.jpg"));
 		ImageView iv = new ImageView(image);
 		root.getChildren().add(iv);
-		
+
 		// write all the stuff on the screen
 		writeLevel();
 		writeAuthor();
@@ -93,47 +93,37 @@ public class ImpasseGame {
 	}
 
 	public void chooseLevel() {
-		switch (myLevel) {
-		case 0:
-			level0();
-			break;
-		case 1:
+		if (myLevel == 1)
 			level1();
-			break;
-		case 2:
+		else if (myLevel == 2)
 			level2();
-			break;
-		case 3:
+		else if (myLevel == 3)
 			level3();
-			break;
-		case 4:
+		else if (myLevel == 4)
 			level4();
-			break;
-		case 5:
+		else if (myLevel == 5)
 			level5();
-			break;
-		case 6:
+		else if (myLevel == 6)
 			level6();
-			break;
-		case 7:
+		else if (myLevel == 7)
 			level7();
-			break;
-		default:
+		else if (myLevel == 8)
+			level8();
+		else
 			level0();
-		}
 	}
 
 	private void writeLevel() {
 		if (myLevel != 0) {
 			drawNextButton();
-			
+
 			Text t = new Text("Level " + myLevel);
 			t.setX(270);
 			t.setY(60);
 			root.getChildren().add(t);
 			t.setFont(Font.font("Verdana", 20));
 			t.setFill(Color.BLACK);
-			
+
 			levelName = new Text();
 			levelName.setY(85);
 			root.getChildren().add(levelName);
@@ -141,7 +131,7 @@ public class ImpasseGame {
 			levelName.setFill(Color.BLACK);
 		}
 	}
-	
+
 	private void writeAuthor() {
 		Text t2 = new Text("Created by Charlie Wang");
 		t2.setX(410);
@@ -186,12 +176,12 @@ public class ImpasseGame {
 		root.getChildren().add(buttonLevel);
 		buttonLevel.setVisible(CANGOTONEXTLEVEL);
 	}
-	
+
 	/**
 	 * Show Main screen
 	 */
 	public void level0() {
-		
+
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(8.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
@@ -213,8 +203,8 @@ public class ImpasseGame {
 		root.getChildren().add(buttonBegin);
 
 	}
-	
-	/** 
+
+	/**
 	 * Map setup of level 1 Sol: O
 	 */
 	public void level1() {
@@ -228,8 +218,9 @@ public class ImpasseGame {
 
 		setBall(175, 300);
 		setDest(425, 300);
-		
-		//The exact location of the portals (DON'T CHANGE without careful consideration)
+
+		// The exact location of the portals (DON'T CHANGE without careful
+		// consideration)
 		Portal portal1 = new Portal(270, 280, 325, 280, 1, 1, Color.ORANGE, 255, 300, 350, 300);
 		myPortal.add(portal1);
 
@@ -240,13 +231,13 @@ public class ImpasseGame {
 		t1.setScaleY(1.5);
 		t1.setFill(Color.GREEN);
 		root.getChildren().add(t1);
-		
+
 		levelName.setText("The Portal");
 		levelName.setX(253);
 
 		hintText.setText("Solution: Orange");
 	}
-	
+
 	/**
 	 * Map setup of level 2 Sol: PU-->GR-->BL
 	 */
@@ -267,7 +258,8 @@ public class ImpasseGame {
 		setBall(150, 200);
 		setDest(250, 450);
 
-		//The exact location of the portals (DON'T CHANGE without careful consideration)
+		// The exact location of the portals (DON'T CHANGE without careful
+		// consideration)
 		Portal portal1 = new Portal(125, 100, 495, 225, 0, 1, Color.ORANGE, 150, 125, 480, 250);
 		Portal portal2 = new Portal(225, 495, 495, 325, 0, 1, Color.BLUE, 250, 480, 480, 350);
 		Portal portal3 = new Portal(225, 200, 495, 425, 0, 1, Color.GREY, 250, 225, 480, 450);
@@ -290,10 +282,10 @@ public class ImpasseGame {
 		t1.setScaleY(1.5);
 		t1.setFill(Color.GREEN);
 		root.getChildren().add(t1);
-		
+
 		levelName.setText("The Wall");
 		levelName.setX(261);
-		
+
 		hintText.setText("Solution: Purple -> \nGreen -> Blue");
 	}
 
@@ -301,7 +293,7 @@ public class ImpasseGame {
 	 * Map setup of level 3 Sol: O
 	 */
 	public void level3() {
-		
+
 		myWall.add(new Rectangle(150, 150, 5, 300));
 		myWall.add(new Rectangle(150, 450, 300, 5));
 		myWall.add(new Rectangle(150, 150, 100, 5));
@@ -350,7 +342,7 @@ public class ImpasseGame {
 	 * Map setup of level 4 Sol: B-->OL-->B
 	 */
 	public void level4() {
-		
+
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
 		myWall.add(new Rectangle(100, 100, 400, 5));
@@ -371,7 +363,7 @@ public class ImpasseGame {
 
 		levelName.setText("The Deadend");
 		levelName.setX(240);
-		
+
 		hintText.setText("Solution: Blue -> \nLeft Orange -> Blue");
 	}
 
@@ -409,10 +401,10 @@ public class ImpasseGame {
 
 		levelName.setText("The Windmill");
 		levelName.setX(240);
-		
+
 		hintText.setText("Solution: Orange -> \nRight Orange -> Blue -> \nUpper Blue -> Pink -> \nLeft Pink");
 	}
-	
+
 	/**
 	 * Map setup of level 6 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
 	 */
@@ -460,11 +452,11 @@ public class ImpasseGame {
 
 		levelName.setText("The Web");
 		levelName.setX(263);
-		
+
 		hintText.setText("Solution: Orange -> \nBlue -> Pink -> Grey -> \nPurple -> Blue -> Brown -> \nBlue -> Brown");
 
 	}
-	
+
 	/**
 	 * Map setup of level 7 Sol: P-->O-->C-->O-->P-->O-->B
 	 */
@@ -501,7 +493,7 @@ public class ImpasseGame {
 
 		levelName.setText("The Swirl");
 		levelName.setX(258);
-		
+
 		hintText.setText("Solution: Pink -> \nOrange -> Cyan -> \nOrange -> Pink -> \nOrange -> Blue");
 	}
 
@@ -511,17 +503,38 @@ public class ImpasseGame {
 		myWall.add(new Rectangle(100, 100, 400, 5));
 		myWall.add(new Rectangle(500, 100, 5, 400));
 		myWall.add(new Rectangle(100, 200, 300, 5));
-		myWall.add(new Rectangle(400, 200, 300, 5));
-		
-		//setBall(150, 150);
+		myWall.add(new Rectangle(200, 200, 5, 100));
+		myWall.add(new Rectangle(200, 400, 5, 100));
+		myWall.add(new Rectangle(400, 200, 5, 100));
+		myWall.add(new Rectangle(400, 400, 5, 100));
+
+		setBall(300, 350);
 		setDest(150, 150);
+		Portal portal1 = new Portal(205, 325, 495, 325, 1, 1, Color.ORANGE, 235, 350, 480, 350);
+		Portal portal2 = new Portal(390, 325, 425, 100, 1, 0, Color.RED, 375, 350, 450, 125);
+		Portal portal3 = new Portal(100, 325, 495, 225, 1, 1, Color.PINK, 125, 350, 480, 250);
+		Portal portal4 = new Portal(100, 425, 495, 125, 1, 1, Color.CYAN, 125, 450, 480, 150);
+		Door d1 = new Door(400, 300, 5, 100, Color.ORANGE);
+		portal1.addDoor(d1, true);
+		d1.connectPortal(portal2);
+		Door d2 = new Door(200, 300, 5, 100, Color.RED);
+		portal2.addDoor(d2, true);
+		d2.connectPortal(portal1);
+		portal2.addDoor(300, 105, 5, 95, false);
+		portal3.addDoor(200, 105, 5, 95, true);
+		myPortal.add(portal1);
+		myPortal.add(portal2);
+		myPortal.add(portal3);
+		myPortal.add(portal4);
 	}
-	
+
 	/**
 	 * Set the location of the ball (player)
 	 *
-	 * @param x-axis of the player (the ball)
-	 * @param y-axis of the player (the ball)
+	 * @param x-axis
+	 *            of the player (the ball)
+	 * @param y-axis
+	 *            of the player (the ball)
 	 */
 	private void setBall(int ballX, int ballY) {
 		myBall = new Circle();
@@ -537,8 +550,10 @@ public class ImpasseGame {
 	/**
 	 * Set the location of the destination (target)
 	 *
-	 * @param x-axis of the target
-	 * @param x-axis of the target
+	 * @param x-axis
+	 *            of the target
+	 * @param x-axis
+	 *            of the target
 	 */
 	private void setDest(int destX, int destY) {
 		myDest = new Circle();
@@ -613,8 +628,7 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Available keys: up down left right
-	 * 				H -- solution, R -- reset
+	 * Available keys: up down left right H -- solution, R -- reset
 	 */
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
@@ -695,7 +709,7 @@ public class ImpasseGame {
 		t3.setY(300.0f);
 		t3.setFill(Color.RED);
 		t3.setText("Congratulations!");
-		//t3.setFont(Font.font("CENTER_BASELINE", FontWeight.BOLD, 60));
+		// t3.setFont(Font.font("CENTER_BASELINE", FontWeight.BOLD, 60));
 		t3.setFont(Font.font("Serif", 68));
 		root.getChildren().add(t3);
 	}
