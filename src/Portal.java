@@ -14,21 +14,6 @@ public class Portal {
 	public ArrayList<Door> allMyDoor = new ArrayList<Door>();
 
 	/**
-	 * This class contains a rectangle that can toggle its visibility
-	 *  each time the player enters a portal of the same color
-	 */
-	public class Door {
-		public Rectangle myDoor;
-		public boolean isVisible;
-		public boolean initVisible;
-
-		public Door(int doorX, int doorY, int length, int width, Color c) {
-			myDoor = new Rectangle(doorX, doorY, length, width);
-			myDoor.setFill(c);
-		}
-	}
-
-	/**
 	 * This class contains a rectangle that represents a portal.
 	 * Two halfPortals are one complete pair of portals
 	 */
@@ -49,13 +34,18 @@ public class Portal {
 
 	/**
 	 * Portal constructor
-	 * A portal is consisted of 2 half-portals.
-	 * port1X, port1Y -- the first half-portal's coordinates
-	 * port2X, port2Y -- the second half-portal's coordinates
-	 * pos1, pos2 -- whether the half-portal(s) is horizontal or vertical
-	 * c -- the color of the portal (and its doors)
-	 * exit1X, exit1Y -- the coordinates to exit half-portal 1 
-	 * exit2X, exit2Y -- the coordinates to exit half-portal 2  
+	 * 
+	 * @param port1X the first half-portal's x coordinate
+	 * @param port1Y the first half-portal's y coordinate
+	 * @param port2X the second half-portal's x coordinate
+	 * @param port2Y the second half-portal's y coordinate
+	 * @param pos1 whether the half-portal(s) is horizontal or vertical (1-vertical, 2-horizontal)
+	 * @param pos2 whether the half-portal(s) is horizontal or vertical
+	 * @param c the color of the portal (and its doors)
+	 * @param exit1X the x coordinate to exit half-portal 1 
+	 * @param exit1Y the y coordinate to exit half-portal 1 
+	 * @param exit2X the x coordinate to exit half-portal 2 
+	 * @param exit2Y the y coordinate to exit half-portal 2 
 	 */
 	public Portal(int port1X, int port1Y, int port2X, int port2Y, int pos1, int pos2, Color c, 
 			int exit1X, int exit1Y, int exit2X, int exit2Y) {
@@ -88,6 +78,10 @@ public class Portal {
 		for (Door d : allMyDoor) {
 			d.isVisible=!d.isVisible;
 			d.myDoor.setVisible(d.isVisible);
+			for (Portal p : d.myList) {
+				p.h1.rec.setVisible(!p.h1.rec.isVisible());
+				p.h2.rec.setVisible(!p.h2.rec.isVisible());
+			}
 		}
 	}
 
@@ -97,6 +91,10 @@ public class Portal {
 	 */
 	public void addDoor(int doorX, int doorY, int length, int width, boolean visible) {
 		Door d1 = new Door(doorX, doorY, length, width, myColor);
+		addDoor(d1, visible);
+	}
+	
+	public void addDoor(Door d1, boolean visible) {
 		d1.myDoor.setVisible(visible);
 		d1.isVisible = visible;
 		d1.initVisible = visible;

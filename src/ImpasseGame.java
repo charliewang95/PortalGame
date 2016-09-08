@@ -83,7 +83,7 @@ public class ImpasseGame {
 		for (Portal p : myPortal) {
 			root.getChildren().add(p.h1.rec);
 			root.getChildren().add(p.h2.rec);
-			for (Portal.Door d : p.allMyDoor) {
+			for (Door d : p.allMyDoor) {
 				root.getChildren().add(d.myDoor);
 			}
 		}
@@ -123,8 +123,10 @@ public class ImpasseGame {
 		}
 	}
 
-	public void writeLevel() {
+	private void writeLevel() {
 		if (myLevel != 0) {
+			drawNextButton();
+			
 			Text t = new Text("Level " + myLevel);
 			t.setX(270);
 			t.setY(60);
@@ -140,7 +142,7 @@ public class ImpasseGame {
 		}
 	}
 	
-	public void writeAuthor() {
+	private void writeAuthor() {
 		Text t2 = new Text("Created by Charlie Wang");
 		t2.setX(410);
 		t2.setY(560);
@@ -148,7 +150,7 @@ public class ImpasseGame {
 		root.getChildren().add(t2);
 	}
 
-	public void writeHintText() {
+	private void writeHintText() {
 		hintText = new Text();
 		hintText.setX(50);
 		hintText.setY(40);
@@ -157,7 +159,7 @@ public class ImpasseGame {
 		root.getChildren().add(hintText);
 	}
 
-	public void writeHelpText() {
+	private void writeHelpText() {
 		if (myLevel != 0) {
 			Text t6 = new Text("Press \u2190, \u2191, \u2192, \u2193 to move");
 			Text t4 = new Text("Press \"R\" to reset the level");
@@ -177,7 +179,7 @@ public class ImpasseGame {
 		}
 	}
 
-	public void drawNextButton() {
+	private void drawNextButton() {
 		buttonLevel = new Button("Next Level");
 		buttonLevel.setLayoutX(450);
 		buttonLevel.setLayoutY(40);
@@ -216,7 +218,6 @@ public class ImpasseGame {
 	 * Map setup of level 1 Sol: O
 	 */
 	public void level1() {
-		drawNextButton();
 
 		myWall.add(new Rectangle(150, 250, 300, 5));
 		myWall.add(new Rectangle(150, 350, 300, 5));
@@ -250,7 +251,6 @@ public class ImpasseGame {
 	 * Map setup of level 2 Sol: PU-->GR-->BL
 	 */
 	public void level2() {
-		drawNextButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -301,9 +301,7 @@ public class ImpasseGame {
 	 * Map setup of level 3 Sol: O
 	 */
 	public void level3() {
-		drawNextButton();
 		
-		//The exact location of the walls (DON'T CHANGE without careful consideration)
 		myWall.add(new Rectangle(150, 150, 5, 300));
 		myWall.add(new Rectangle(150, 450, 300, 5));
 		myWall.add(new Rectangle(150, 150, 100, 5));
@@ -315,7 +313,6 @@ public class ImpasseGame {
 		setBall(300, 400);
 		setDest(200, 400);
 
-		//The exact location of the portals (DON'T CHANGE without careful consideration)
 		Portal portal1 = new Portal(175, 150, 445, 375, 0, 1, Color.ORANGE, 200, 175, 430, 400);
 		portal1.addDoor(155, 350, 95, 5, true);
 		portal1.addDoor(350, 355, 5, 95, false);
@@ -353,8 +350,7 @@ public class ImpasseGame {
 	 * Map setup of level 4 Sol: B-->OL-->B
 	 */
 	public void level4() {
-		drawNextButton();
-
+		
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
 		myWall.add(new Rectangle(100, 100, 400, 5));
@@ -383,7 +379,6 @@ public class ImpasseGame {
 	 * Map setup of level 5 Sol: O-->OR-->B-->BU-->P-->PL
 	 */
 	public void level5() {
-		drawNextButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -422,7 +417,6 @@ public class ImpasseGame {
 	 * Map setup of level 6 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
 	 */
 	public void level6() {
-		drawNextButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -475,7 +469,6 @@ public class ImpasseGame {
 	 * Map setup of level 7 Sol: P-->O-->C-->O-->P-->O-->B
 	 */
 	public void level7() {
-		drawNextButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -506,19 +499,31 @@ public class ImpasseGame {
 		portal4.addDoor(420, 360, 80, 5, true);
 		myPortal.add(portal4);
 
-		levelName.setText("The Road");
-		levelName.setX(260);
+		levelName.setText("The Swirl");
+		levelName.setX(258);
 		
 		hintText.setText("Solution: Pink -> \nOrange -> Cyan -> \nOrange -> Pink -> \nOrange -> Blue");
 	}
 
+	public void level8() {
+		myWall.add(new Rectangle(100, 100, 5, 400));
+		myWall.add(new Rectangle(100, 500, 405, 5));
+		myWall.add(new Rectangle(100, 100, 400, 5));
+		myWall.add(new Rectangle(500, 100, 5, 400));
+		myWall.add(new Rectangle(100, 200, 300, 5));
+		myWall.add(new Rectangle(400, 200, 300, 5));
+		
+		//setBall(150, 150);
+		setDest(150, 150);
+	}
+	
 	/**
 	 * Set the location of the ball (player)
 	 *
 	 * @param x-axis of the player (the ball)
 	 * @param y-axis of the player (the ball)
 	 */
-	public void setBall(int ballX, int ballY) {
+	private void setBall(int ballX, int ballY) {
 		myBall = new Circle();
 		myBall.setCenterX(ballX);
 		myBall.setCenterY(ballY);
@@ -535,7 +540,7 @@ public class ImpasseGame {
 	 * @param x-axis of the target
 	 * @param x-axis of the target
 	 */
-	public void setDest(int destX, int destY) {
+	private void setDest(int destX, int destY) {
 		myDest = new Circle();
 		myDest.setCenterX(destX);
 		myDest.setCenterY(destY);
@@ -547,7 +552,7 @@ public class ImpasseGame {
 	/**
 	 * Detect whether the ball has touched the black wall
 	 */
-	public boolean touchedWall() {
+	private boolean touchedWall() {
 		for (Rectangle r : myWall) {
 			Shape intersect = Shape.intersect(myBall, r);
 			if (intersect.getBoundsInLocal().getWidth() != -1) {
@@ -560,9 +565,9 @@ public class ImpasseGame {
 	/**
 	 * Detect whether the ball has touched any colored door (stop)
 	 */
-	public boolean touchedDoor() {
+	private boolean touchedDoor() {
 		for (Portal p : myPortal) {
-			for (Portal.Door d : p.allMyDoor) {
+			for (Door d : p.allMyDoor) {
 				Shape intersect = Shape.intersect(myBall, d.myDoor);
 				if (intersect.getBoundsInLocal().getWidth() != -1 && d.isVisible) {
 					return true;
@@ -576,7 +581,7 @@ public class ImpasseGame {
 	 * Detect whether the ball has touched any portal to transport, it also has
 	 * to touch the wall (go into the portal)
 	 */
-	public boolean touchedPortal() {
+	private boolean touchedPortal() {
 		for (Portal p : myPortal) {
 			Shape intersect1 = Shape.intersect(myBall, p.h1.rec);
 			if (intersect1.getBoundsInLocal().getWidth() != -1) {
@@ -599,7 +604,7 @@ public class ImpasseGame {
 	/**
 	 * Detect whether the player passes the level (reach the destination)
 	 */
-	public boolean touchedDest() {
+	private boolean touchedDest() {
 		Shape intersect = Shape.intersect(myBall, myDest);
 		if (intersect.getBoundsInLocal().getWidth() != -1) {
 			return true;
@@ -698,10 +703,12 @@ public class ImpasseGame {
 	/**
 	 * Reset the board to its initial state
 	 */
-	public void reset() {
+	private void reset() {
 		for (Portal p : myPortal) {
 			if (p.count == 1) {
 				p.toggleVisibility();
+				p.h1.rec.setVisible(true);
+				p.h2.rec.setVisible(true);
 			}
 		}
 
@@ -712,7 +719,7 @@ public class ImpasseGame {
 	/**
 	 * show the solution
 	 */
-	public void showHint() {
+	private void showHint() {
 		this.hintText.setVisible(!this.hintText.isVisible());
 	}
 
