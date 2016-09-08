@@ -18,7 +18,7 @@ import javafx.util.Duration;
  * 
  */
 public class ImpasseMain extends Application {
-	private static final int INITLEVEL = 5;  //the beginning level to start the game; use to debug; default-->0
+	private static final int INITLEVEL = 0;  //the beginning level to start the game; use to debug; default-->0
 	public static final int SIZE = 600; //size of the board
 	public static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 100 / FRAMES_PER_SECOND;

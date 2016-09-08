@@ -43,17 +43,18 @@ public class ImpasseGame {
 	public Button buttonLevel, buttonBegin, buttonReset;
 	private Text t3, hintText, levelName;
 
-	/*
-	 * returns the title of the game
+	/**
+	 * @return the title of the game
 	 */
 	public String getTitle() {
 		return TITLE;
 	}
 
-	/*
+	/**
 	 * Initialize the board, draws the map, walls, portals, doors, and balls
 	 */
 	public Scene init(int width, int height, int level) {
+		
 		myLevel = level;
 		myWall.clear();
 		myPortal.clear();
@@ -61,6 +62,10 @@ public class ImpasseGame {
 		myScene = new Scene(root, width, height, Color.WHITE);
 		myScene.setFill(Color.LIGHTGRAY);
 
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream("light_texture2291.jpg"));
+		ImageView iv = new ImageView(image);
+		root.getChildren().add(iv);
+		
 		// write all the stuff on the screen
 		writeLevel();
 		writeAuthor();
@@ -70,13 +75,11 @@ public class ImpasseGame {
 		// Set up the board according to which level I'm in
 		chooseLevel();
 
-		// Show all the walls
 		for (Rectangle r : myWall) {
 			r.setFill(Color.BLACK);
 			root.getChildren().add(r);
 		}
 
-		// Show all the portals and doors
 		for (Portal p : myPortal) {
 			root.getChildren().add(p.h1.rec);
 			root.getChildren().add(p.h2.rec);
@@ -182,11 +185,11 @@ public class ImpasseGame {
 		buttonLevel.setVisible(CANGOTONEXTLEVEL);
 	}
 	
-	/*
+	/**
 	 * Show Main screen
 	 */
 	public void level0() {
-
+		
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(8.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
@@ -209,7 +212,7 @@ public class ImpasseGame {
 
 	}
 	
-	/* 
+	/** 
 	 * Map setup of level 1 Sol: O
 	 */
 	public void level1() {
@@ -243,7 +246,7 @@ public class ImpasseGame {
 		hintText.setText("Solution: Orange");
 	}
 	
-	/*
+	/**
 	 * Map setup of level 2 Sol: PU-->GR-->BL
 	 */
 	public void level2() {
@@ -294,7 +297,7 @@ public class ImpasseGame {
 		hintText.setText("Solution: Purple -> \nGreen -> Blue");
 	}
 
-	/*
+	/**
 	 * Map setup of level 3 Sol: O
 	 */
 	public void level3() {
@@ -346,7 +349,7 @@ public class ImpasseGame {
 
 	}
 
-	/*
+	/**
 	 * Map setup of level 4 Sol: B-->OL-->B
 	 */
 	public void level4() {
@@ -376,7 +379,7 @@ public class ImpasseGame {
 		hintText.setText("Solution: Blue -> \nLeft Orange -> Blue");
 	}
 
-	/*
+	/**
 	 * Map setup of level 5 Sol: O-->OR-->B-->BU-->P-->PL
 	 */
 	public void level5() {
@@ -415,7 +418,7 @@ public class ImpasseGame {
 		hintText.setText("Solution: Orange -> \nRight Orange -> Blue -> \nUpper Blue -> Pink -> \nLeft Pink");
 	}
 	
-	/*
+	/**
 	 * Map setup of level 6 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
 	 */
 	public void level6() {
@@ -468,7 +471,7 @@ public class ImpasseGame {
 
 	}
 	
-	/*
+	/**
 	 * Map setup of level 7 Sol: P-->O-->C-->O-->P-->O-->B
 	 */
 	public void level7() {
@@ -509,8 +512,11 @@ public class ImpasseGame {
 		hintText.setText("Solution: Pink -> \nOrange -> Cyan -> \nOrange -> Pink -> \nOrange -> Blue");
 	}
 
-	/*
+	/**
 	 * Set the location of the ball (player)
+	 *
+	 * @param x-axis of the player (the ball)
+	 * @param y-axis of the player (the ball)
 	 */
 	public void setBall(int ballX, int ballY) {
 		myBall = new Circle();
@@ -523,8 +529,11 @@ public class ImpasseGame {
 		root.getChildren().add(myBall);
 	}
 
-	/*
+	/**
 	 * Set the location of the destination (target)
+	 *
+	 * @param x-axis of the target
+	 * @param x-axis of the target
 	 */
 	public void setDest(int destX, int destY) {
 		myDest = new Circle();
@@ -535,7 +544,7 @@ public class ImpasseGame {
 		root.getChildren().add(myDest);
 	}
 
-	/*
+	/**
 	 * Detect whether the ball has touched the black wall
 	 */
 	public boolean touchedWall() {
@@ -548,7 +557,7 @@ public class ImpasseGame {
 		return false;
 	}
 
-	/*
+	/**
 	 * Detect whether the ball has touched any colored door (stop)
 	 */
 	public boolean touchedDoor() {
@@ -563,7 +572,7 @@ public class ImpasseGame {
 		return false;
 	}
 
-	/*
+	/**
 	 * Detect whether the ball has touched any portal to transport, it also has
 	 * to touch the wall (go into the portal)
 	 */
@@ -587,7 +596,7 @@ public class ImpasseGame {
 		return false;
 	}
 
-	/*
+	/**
 	 * Detect whether the player passes the level (reach the destination)
 	 */
 	public boolean touchedDest() {
@@ -666,7 +675,7 @@ public class ImpasseGame {
 		}
 	}
 
-	/*
+	/**
 	 * Print the winning message
 	 */
 	private void winMessage() {
@@ -678,7 +687,7 @@ public class ImpasseGame {
 		t3 = new Text();
 		t3.setEffect(ds);
 		t3.setX(80.0f);
-		t3.setY(270.0f);
+		t3.setY(300.0f);
 		t3.setFill(Color.RED);
 		t3.setText("Congratulations!");
 		//t3.setFont(Font.font("CENTER_BASELINE", FontWeight.BOLD, 60));
@@ -686,7 +695,7 @@ public class ImpasseGame {
 		root.getChildren().add(t3);
 	}
 
-	/*
+	/**
 	 * Reset the board to its initial state
 	 */
 	public void reset() {
@@ -700,7 +709,7 @@ public class ImpasseGame {
 		setBall(ballInitX, ballInitY);
 	}
 
-	/*
+	/**
 	 * show the solution
 	 */
 	public void showHint() {

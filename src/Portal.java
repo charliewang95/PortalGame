@@ -13,7 +13,7 @@ public class Portal {
 	public Color myColor;
 	public ArrayList<Door> allMyDoor = new ArrayList<Door>();
 
-	/*
+	/**
 	 * This class contains a rectangle that can toggle its visibility
 	 *  each time the player enters a portal of the same color
 	 */
@@ -28,7 +28,7 @@ public class Portal {
 		}
 	}
 
-	/*
+	/**
 	 * This class contains a rectangle that represents a portal.
 	 * Two halfPortals are one complete pair of portals
 	 */
@@ -47,7 +47,7 @@ public class Portal {
 		}
 	}
 
-	/*
+	/**
 	 * Portal constructor
 	 * A portal is consisted of 2 half-portals.
 	 * port1X, port1Y -- the first half-portal's coordinates
@@ -68,14 +68,14 @@ public class Portal {
 		myExit2Y = exit2Y;
 	}
 
-	/*
+	/**
 	 * returns the color of wanted set of portal-door
 	 */
 	public Color getColor() {
 		return myColor;
 	}
 
-	/*
+	/**
 	 * toggle the visibility of each door in the same set of portal
 	 */
 	public void toggleVisibility() {
@@ -91,7 +91,7 @@ public class Portal {
 		}
 	}
 
-	/*
+	/**
 	 * method for level building
 	 * add a door to the arraylist that stores all the doors in the set of portals
 	 */
