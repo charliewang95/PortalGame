@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 public class ImpasseGame {
 	private static final String TITLE = "Impasse";
 	private static final int KEY_INPUT_SPEED = 15; // the moving speed of the green ball
-	private static final boolean CANGOTONEXTLEVEL = false; // changing this will change whether the player can go to the
+	private boolean CANGOTONEXTLEVEL = false; // changing this will change whether the player can go to the
 															// next level without finishing the current one
 	private static final int RADIUS = 15; // the radius of the balls
 	private static final Color ballColor = Color.GREEN;
@@ -35,13 +35,14 @@ public class ImpasseGame {
 	private int myLevel, ballInitX, ballInitY;
 	public int levelChosen;
 	private Scene myScene;
+	private boolean cheat;
 	private ArrayList<Rectangle> myWall = new ArrayList<Rectangle>();
 	private ArrayList<Portal> myPortal = new ArrayList<Portal>();
 	private Circle myBall, myDest;
 	private Group root;
 
 	public Button buttonLevel, buttonBegin, buttonReset;
-	private Text t3, hintText, levelName;
+	private Text t3, hintText, levelName, cheatText;
 
 	/**
 	 * @return the title of the game
@@ -71,6 +72,7 @@ public class ImpasseGame {
 		writeAuthor();
 		writeHintText();
 		writeHelpText();
+		writeCheatText();
 
 		// Set up the board according to which level I'm in
 		chooseLevel();
@@ -169,6 +171,15 @@ public class ImpasseGame {
 		}
 	}
 
+	private void writeCheatText() {
+		cheatText = new Text("Cheat Activated");
+		cheatText.setX(257);
+		cheatText.setY(35);
+		cheatText.setFont(Font.font("Verdana", 12));
+		cheatText.setVisible(false);
+		root.getChildren().add(cheatText);
+	}
+	
 	private void drawNextButton() {
 		buttonLevel = new Button("Next Level");
 		buttonLevel.setLayoutX(450);
@@ -213,8 +224,8 @@ public class ImpasseGame {
 		myWall.add(new Rectangle(150, 350, 300, 5));
 		myWall.add(new Rectangle(150, 250, 5, 100));
 		myWall.add(new Rectangle(450, 250, 5, 105));
-		myWall.add(new Rectangle(275, 250, 5, 100));
-		myWall.add(new Rectangle(325, 250, 5, 105));
+		myWall.add(new Rectangle(275, 250, 20, 100));
+		myWall.add(new Rectangle(310, 250, 20, 105));
 
 		Portal portal1 = new Portal(270, 280, 325, 280, 1, 1, Color.ORANGE, 255, 300, 350, 300);
 		myPortal.add(portal1);
@@ -520,12 +531,16 @@ public class ImpasseGame {
 		Door d2 = new Door(200, 300, 5, 100, Color.RED);
 		portal2.addDoor(d2, true);
 		d2.connectPortal(portal1);
-		portal2.addDoor(300, 105, 5, 95, false);
 		portal1.addDoor(250, 105, 5, 95, true);
-		portal4.addDoor(105, 400, 95, 5, false);
-		portal4.addDoor(200, 105, 5, 95, true);
+		portal1.addDoor(410, 300, 5, 95, true);
+		portal1.addDoor(405, 340, 5, 20, true);
+		portal2.addDoor(300, 105, 5, 95, false);
+		portal2.addDoor(190, 300, 5, 95, true);
+		portal2.addDoor(195, 340, 5, 20, true);
 		portal3.addDoor(405, 200, 95, 5, true);
 		portal3.addDoor(400, 105, 5, 95, false);
+		portal4.addDoor(105, 400, 95, 5, false);
+		portal4.addDoor(200, 105, 5, 95, true);
 		myPortal.add(portal1);
 		myPortal.add(portal2);
 		myPortal.add(portal3);
@@ -580,6 +595,7 @@ public class ImpasseGame {
 	 * Detect whether the ball has touched the black wall
 	 */
 	private boolean touchedWall() {
+		if (cheat==true) return false;
 		for (Rectangle r : myWall) {
 			Shape intersect = Shape.intersect(myBall, r);
 			if (intersect.getBoundsInLocal().getWidth() != -1) {
@@ -593,6 +609,7 @@ public class ImpasseGame {
 	 * Detect whether the ball has touched any colored door (stop)
 	 */
 	private boolean touchedDoor() {
+		if (cheat==true) return false;
 		for (Portal p : myPortal) {
 			for (Door d : p.allMyDoor) {
 				Shape intersect = Shape.intersect(myBall, d.myDoor);
@@ -609,6 +626,7 @@ public class ImpasseGame {
 	 * to touch the wall (go into the portal)
 	 */
 	private boolean touchedPortal() {
+		if (cheat==true) return false;
 		for (Portal p : myPortal) {
 			Shape intersect1 = Shape.intersect(myBall, p.h1.rec);
 			if (intersect1.getBoundsInLocal().getWidth() != -1) {
@@ -640,10 +658,17 @@ public class ImpasseGame {
 	}
 
 	/*
-	 * Available keys: up down left right H -- solution, R -- reset
+	 * Available keys: up down left right; H -- solution, R -- reset, P -- Go to next level directly
 	 */
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
+		case I:
+			cheatText.setVisible(!cheatText.isVisible());
+			cheat=!cheat;
+			break;
+		case P:
+			buttonLevel.setVisible(!buttonLevel.isVisible());
+			break;
 		case R:
 			reset();
 			break;
@@ -721,11 +746,10 @@ public class ImpasseGame {
 		t3.setY(300.0f);
 		t3.setFill(Color.RED);
 		t3.setText("Congratulations!");
-		// t3.setFont(Font.font("CENTER_BASELINE", FontWeight.BOLD, 60));
 		t3.setFont(Font.font("Serif", 68));
 		root.getChildren().add(t3);
 	}
-
+	
 	/**
 	 * Reset the board to its initial state
 	 */
