@@ -18,8 +18,8 @@ import javafx.util.Duration;
  * 
  */
 public class ImpasseMain extends Application {
-	private static final int INITLEVEL = 0;
-	public static final int SIZE = 600;
+	private static final int INITLEVEL = 5;  //the beginning level to start the game; use to debug; default-->0
+	public static final int SIZE = 600; //size of the board
 	public static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 100 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 0.1 / FRAMES_PER_SECOND;
@@ -32,14 +32,14 @@ public class ImpasseMain extends Application {
 	public void start(Stage s) throws Exception {
 		myStage = s;
 		currentLevel=INITLEVEL;
-		myGame[0] = new ImpasseGame();
-		scene[0] = myGame[0].init(SIZE, SIZE, 0);
-		myGame[0].buttonBegin.setOnAction(e -> ButtonClicked(e));
-		for (int i = 1; i < 8; i++) {
+		for (int i = 0; i < 8; i++) {
 			myGame[i] = new ImpasseGame();
 			s.setTitle(myGame[i].getTitle());
 			scene[i] = myGame[i].init(SIZE, SIZE, i);
-			myGame[i].buttonLevel.setOnAction(e -> ButtonClicked(e));
+			if (i==0)
+				myGame[0].buttonBegin.setOnAction(e -> ButtonClicked(e));
+			else 
+				myGame[i].buttonLevel.setOnAction(e -> ButtonClicked(e));
 		}
 		s.setScene(scene[INITLEVEL]);
 		s.setResizable(false);

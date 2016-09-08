@@ -26,9 +26,10 @@ import javafx.scene.text.Text;
  */
 public class ImpasseGame {
 	private static final String TITLE = "Impasse";
-	private static final int KEY_INPUT_SPEED = 10;
-	private static final boolean CANGOTONEXTLEVEL = true;
-	private static final int RADIUS = 15;
+	private static final int KEY_INPUT_SPEED = 20; //the moving speed of the green ball
+	private static final boolean CANGOTONEXTLEVEL = false; //changing this will change whether the player 
+														   //can go to the next level without finishing the current one
+	private static final int RADIUS = 15; //the radius of the balls
 	private static final Color ballColor = Color.GREEN;
 	private static final Color destColor = Color.RED;
 	private int myLevel, ballInitX, ballInitY;
@@ -180,34 +181,12 @@ public class ImpasseGame {
 		root.getChildren().add(buttonLevel);
 		buttonLevel.setVisible(CANGOTONEXTLEVEL);
 	}
-
-	public void openDialog () {
-		List<String> choices = new ArrayList<>();
-		for (int i=0; i<8; i++) {
-			Integer integer = i;
-			choices.add(integer.toString());
-		}
-
-		ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices);
-		dialog.setTitle(null);
-		dialog.setHeaderText(null);
-		dialog.setContentText("Choose your level:");
-
-		// Traditional way to get the response value.
-		Optional<String> result = dialog.showAndWait();
-		if (result.isPresent()){
-		    levelChosen = Integer.parseInt(result.get());
-		}
-	}
 	
 	/*
 	 * Show Main screen
 	 */
 	public void level0() {
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
-		ImageView iv1 = new ImageView(image);
-        root.getChildren().add(iv1);
-		
+
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(8.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
@@ -435,11 +414,64 @@ public class ImpasseGame {
 		
 		hintText.setText("Solution: Orange -> \nRight Orange -> Blue -> \nUpper Blue -> Pink -> \nLeft Pink");
 	}
-
+	
 	/*
-	 * Map setup of level 6 Sol: P-->O-->C-->O-->P-->O-->B
+	 * Map setup of level 6 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
 	 */
 	public void level6() {
+		drawNextButton();
+
+		myWall.add(new Rectangle(100, 100, 5, 400));
+		myWall.add(new Rectangle(100, 500, 405, 5));
+		myWall.add(new Rectangle(100, 100, 400, 5));
+		myWall.add(new Rectangle(500, 100, 5, 400));
+		setBall(150, 150);
+		setDest(308, 300);
+
+		Portal portal1 = new Portal(100, 125, 495, 425, 1, 1, Color.ORANGE, 125, 150, 480, 450);
+		Portal portal2 = new Portal(100, 425, 435, 495, 1, 0, Color.BLUE, 125, 450, 460, 480);
+		Portal portal3 = new Portal(125, 495, 435, 100, 0, 0, Color.PINK, 150, 480, 460, 125);
+		Portal portal4 = new Portal(495, 125, 285, 100, 1, 0, Color.GREY, 480, 150, 310, 125);
+		Portal portal5 = new Portal(125, 100, 495, 280, 0, 1, Color.PURPLE, 150, 125, 480, 305);
+		Portal portal6 = new Portal(280, 495, 100, 280, 0, 1, Color.BROWN, 305, 480, 125, 305);
+		myPortal.add(portal1);
+		myPortal.add(portal2);
+		myPortal.add(portal3);
+		myPortal.add(portal4);
+		myPortal.add(portal5);
+		myPortal.add(portal6);
+
+		portal1.addDoor(105, 190, 395, 5, true);
+		portal2.addDoor(105, 210, 395, 5, true);
+		portal6.addDoor(105, 230, 395, 5, true);
+		portal3.addDoor(105, 250, 395, 5, true);
+
+		portal5.addDoor(105, 350, 395, 5, true);
+		portal4.addDoor(105, 370, 395, 5, true);
+		portal1.addDoor(105, 390, 395, 5, true);
+		portal6.addDoor(105, 410, 395, 5, false);
+
+		portal1.addDoor(190, 105, 5, 395, true);
+		portal2.addDoor(210, 105, 5, 395, true);
+		portal3.addDoor(230, 105, 5, 395, true);
+		portal4.addDoor(250, 105, 5, 395, true);
+
+		portal5.addDoor(350, 105, 5, 395, true);
+		portal6.addDoor(375, 105, 5, 395, true);
+		portal4.addDoor(395, 105, 5, 395, true);
+		portal2.addDoor(415, 105, 5, 395, false);
+
+		levelName.setText("The Web");
+		levelName.setX(263);
+		
+		hintText.setText("Solution: Orange -> \nBlue -> Pink -> Grey -> \nPurple -> Blue -> Brown -> \nBlue -> Brown");
+
+	}
+	
+	/*
+	 * Map setup of level 7 Sol: P-->O-->C-->O-->P-->O-->B
+	 */
+	public void level7() {
 		drawNextButton();
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
@@ -475,59 +507,6 @@ public class ImpasseGame {
 		levelName.setX(260);
 		
 		hintText.setText("Solution: Pink -> \nOrange -> Cyan -> \nOrange -> Pink -> \nOrange -> Blue");
-	}
-
-	/*
-	 * Map setup of level 7 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
-	 */
-	public void level7() {
-		drawNextButton();
-
-		myWall.add(new Rectangle(100, 100, 5, 400));
-		myWall.add(new Rectangle(100, 500, 405, 5));
-		myWall.add(new Rectangle(100, 100, 400, 5));
-		myWall.add(new Rectangle(500, 100, 5, 400));
-		setBall(150, 150);
-		setDest(308, 300);
-
-		Portal portal1 = new Portal(100, 125, 495, 425, 1, 1, Color.ORANGE, 125, 150, 480, 450);
-		Portal portal2 = new Portal(100, 425, 435, 495, 1, 0, Color.BLUE, 125, 450, 460, 480);
-		Portal portal3 = new Portal(125, 495, 435, 100, 0, 0, Color.PINK, 150, 480, 460, 125);
-		Portal portal4 = new Portal(495, 125, 285, 100, 1, 0, Color.GREY, 480, 150, 310, 125);
-		Portal portal5 = new Portal(125, 100, 495, 280, 0, 1, Color.PURPLE, 150, 125, 480, 305);
-		Portal portal6 = new Portal(280, 495, 100, 280, 0, 1, Color.BROWN, 305, 480, 125, 305);
-		myPortal.add(portal1);
-		myPortal.add(portal2);
-		myPortal.add(portal3);
-		myPortal.add(portal4);
-		myPortal.add(portal5);
-		myPortal.add(portal6);
-
-		portal1.addDoor(105, 190, 395, 5, true);
-		portal2.addDoor(105, 210, 395, 5, true);
-		portal6.addDoor(105, 230, 395, 5, true);
-		portal4.addDoor(105, 250, 395, 5, true);
-
-		portal5.addDoor(105, 350, 395, 5, true);
-		portal4.addDoor(105, 370, 395, 5, true);
-		portal1.addDoor(105, 390, 395, 5, true);
-		portal6.addDoor(105, 410, 395, 5, false);
-
-		portal1.addDoor(190, 105, 5, 395, true);
-		portal2.addDoor(210, 105, 5, 395, true);
-		portal3.addDoor(230, 105, 5, 395, true);
-		portal4.addDoor(250, 105, 5, 395, true);
-
-		portal5.addDoor(350, 105, 5, 395, true);
-		portal6.addDoor(375, 105, 5, 395, true);
-		portal4.addDoor(395, 105, 5, 395, true);
-		portal2.addDoor(415, 105, 5, 395, false);
-
-		levelName.setText("The Web");
-		levelName.setX(263);
-		
-		hintText.setText("Solution: Orange -> \nBlue -> Pink -> Grey -> \nPurple -> Blue -> Brown -> \nBlue -> Brown");
-
 	}
 
 	/*
@@ -619,6 +598,10 @@ public class ImpasseGame {
 		return false;
 	}
 
+	/*
+	 * Available keys: up down left right
+	 * 				H -- solution, R -- reset
+	 */
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
 		case R:
@@ -694,11 +677,12 @@ public class ImpasseGame {
 
 		t3 = new Text();
 		t3.setEffect(ds);
-		t3.setX(50.0f);
+		t3.setX(80.0f);
 		t3.setY(270.0f);
 		t3.setFill(Color.RED);
 		t3.setText("Congratulations!");
-		t3.setFont(Font.font(null, FontWeight.BOLD, 60));
+		//t3.setFont(Font.font("CENTER_BASELINE", FontWeight.BOLD, 60));
+		t3.setFont(Font.font("Serif", 68));
 		root.getChildren().add(t3);
 	}
 
