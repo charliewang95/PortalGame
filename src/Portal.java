@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * @author charliewang95
+ *
+ */
 public class Portal {
 	private static final int LENGTH = 50;
 	private static final int WIDTH = 10;
@@ -88,12 +92,22 @@ public class Portal {
 	/**
 	 * method for level building
 	 * add a door to the arraylist that stores all the doors in the set of portals
+	 *
+	 * @param doorX the x coordinates of the door
+	 * @param doorY the y coordinates of the door
+	 * @param length the length of the door
+	 * @param width the width of the door
+	 * @param visible the visibility of the door
 	 */
 	public void addDoor(int doorX, int doorY, int length, int width, boolean visible) {
 		Door d1 = new Door(doorX, doorY, length, width, myColor);
 		addDoor(d1, visible);
 	}
 	
+	/**
+	 * @param d1 Door objects to be added
+	 * @param visible the visibility of the door
+	 */
 	public void addDoor(Door d1, boolean visible) {
 		d1.myDoor.setVisible(visible);
 		d1.isVisible = visible;

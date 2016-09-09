@@ -1,11 +1,8 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +17,9 @@ import javafx.scene.text.Text;
 
 /**
  * Game class
+ * NOTE: some magic numbers in the level setup methods (level0-level8) are 
+ * 		obtained after multiple trials and error. Now all the objects are at 
+ * 		the perfect spot. 
  * 
  * @author Charlie Wang
  * 
@@ -735,7 +735,6 @@ public class ImpasseGame {
 	 * Print the winning message
 	 */
 	private void winMessage() {
-		// Write Win message
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(12.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
