@@ -89,8 +89,9 @@ public class ImpasseGame {
 				root.getChildren().add(d.myDoor);
 			}
 		}
-
-		myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+		if (myLevel!=0) {
+			myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+		}
 		return myScene;
 	}
 
@@ -662,7 +663,7 @@ public class ImpasseGame {
 	 */
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
-		case I:
+		case I: 
 			cheatText.setVisible(!cheatText.isVisible());
 			cheat=!cheat;
 			break;
@@ -672,7 +673,7 @@ public class ImpasseGame {
 		case R:
 			reset();
 			break;
-		case H:
+		case H: 
 			showHint();
 			break;
 		case RIGHT:

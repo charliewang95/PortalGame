@@ -17,9 +17,16 @@ First project for CompSci 308 Fall 2016
 * Program Usage:
  * Run the ImpasseMain.java program to start the game 
  * Keyboard Usage:
-  > **Arrow keys**: Move the green ball  
+
+   > **Arrow keys**: Move the green ball  
     **H**: Show the solution; can toggle on or off  
     **R**: Reset the current level  
+     
  * Cheat codes:
+
   > **P**: Display the "Next Level" button without completing the current level; can toggle on or off  
     **I**: The target moves freely, ignoring walls, portals and doors; can toggle on or off
+
+* Known bugs or crashes: None
+* Extra features: None
+* Impression: The assignment is generally interesting, but might be improved by adding how the grades are done.

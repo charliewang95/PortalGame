@@ -16,7 +16,7 @@ import javafx.util.Duration;
  * 
  */
 public class ImpasseMain extends Application {
-	private static final int INITLEVEL = 8;  //the beginning level to start the game; use to debug; default-->0
+	private static final int INITLEVEL = 0;  //the beginning level to start the game; use to debug; default-->0
 	public static final int TOTALLEVEL = 8;  //total number of levels
 	public static final int SIZE = 600; //size of the board
 	public static final int FRAMES_PER_SECOND = 60;
@@ -25,7 +25,7 @@ public class ImpasseMain extends Application {
 	private Stage myStage;
 	private ImpasseGame[] myGame = new ImpasseGame[20];
 	private int currentLevel;
-	private Scene[] scene = new Scene[TOTALLEVEL];
+	private Scene[] scene = new Scene[TOTALLEVEL+1];
 
 	@Override
 	public void start(Stage s) throws Exception {
