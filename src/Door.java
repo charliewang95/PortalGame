@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
 	 */
 	public class Door {
 		public Rectangle myDoor;
-		public ArrayList<Rectangle> myFakeDoor = new ArrayList<Rectangle>();
+		public ArrayList<Rectangle> myFakeDoor = new ArrayList<Rectangle>(); //dotted (open) doors
 		public boolean isVisible;
 		public boolean initVisible;
 		private static final int DOTTEDRECLENGTH = 10;
