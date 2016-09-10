@@ -33,7 +33,6 @@ public class ImpasseGame {
 	private static final Color ballColor = Color.GREEN;
 	private static final Color destColor = Color.RED;
 	private int myLevel, ballInitX, ballInitY;
-	public int levelChosen;
 	private Scene myScene;
 	private boolean cheat;
 	private ArrayList<Rectangle> myWall = new ArrayList<Rectangle>();
@@ -42,7 +41,7 @@ public class ImpasseGame {
 	private Group root;
 
 	public Button buttonLevel, buttonBegin, buttonReset;
-	private Text t3, hintText, levelName, cheatText;
+	private Text winText, hintText, cheatText, levelName;
 
 	/**
 	 * @return the title of the game
@@ -68,11 +67,12 @@ public class ImpasseGame {
 		root.getChildren().add(iv);
 
 		// write all the stuff on the screen
-		writeLevel();
+		writeLevelName();
 		writeAuthor();
-		writeHintText();
+		writeSolutionText();
 		writeHelpText();
 		writeCheatText();
+		writeWinMessage();
 
 		// Set up the board according to which level I'm in
 		chooseLevel();
@@ -87,6 +87,7 @@ public class ImpasseGame {
 			root.getChildren().add(p.h2.rec);
 			for (Door d : p.allMyDoor) {
 				root.getChildren().add(d.myDoor);
+				root.getChildren().addAll(d.myFakeDoor);
 			}
 		}
 		if (myLevel!=0) {
@@ -116,16 +117,16 @@ public class ImpasseGame {
 			level0();
 	}
 
-	private void writeLevel() {
+	private void writeLevelName() {
 		if (myLevel != 0) {
 			drawNextButton();
 
-			Text t = new Text("Level " + myLevel);
-			t.setX(270);
-			t.setY(60);
-			root.getChildren().add(t);
-			t.setFont(Font.font("Verdana", 20));
-			t.setFill(Color.BLACK);
+			Text tLevel = new Text("Level " + myLevel);
+			tLevel.setX(270);
+			tLevel.setY(60);
+			root.getChildren().add(tLevel);
+			tLevel.setFont(Font.font("Verdana", 20));
+			tLevel.setFill(Color.BLACK);
 
 			levelName = new Text();
 			levelName.setY(85);
@@ -136,14 +137,14 @@ public class ImpasseGame {
 	}
 
 	private void writeAuthor() {
-		Text t2 = new Text("Created by Charlie Wang");
-		t2.setX(410);
-		t2.setY(560);
-		t2.setFont(Font.font("Verdana", 12));
-		root.getChildren().add(t2);
+		Text tAuthor = new Text("Created by Charlie Wang");
+		tAuthor.setX(410);
+		tAuthor.setY(560);
+		tAuthor.setFont(Font.font("Verdana", 12));
+		root.getChildren().add(tAuthor);
 	}
 
-	private void writeHintText() {
+	private void writeSolutionText() {
 		hintText = new Text();
 		hintText.setX(40);
 		hintText.setY(40);
@@ -154,21 +155,21 @@ public class ImpasseGame {
 
 	private void writeHelpText() {
 		if (myLevel != 0) {
-			Text t6 = new Text("Press \u2190, \u2191, \u2192, \u2193 to move");
-			Text t4 = new Text("Press \"R\" to reset the level");
-			Text t5 = new Text("Press \"H\" to show/hide the solution");
-			t6.setX(50);
-			t6.setY(540);
-			t4.setX(50);
-			t4.setY(560);
-			t5.setX(50);
-			t5.setY(580);
-			t4.setFont(Font.font("Verdana", 12));
-			t5.setFont(Font.font("Verdana", 12));
-			t6.setFont(Font.font("Verdana", 12));
-			root.getChildren().add(t4);
-			root.getChildren().add(t5);
-			root.getChildren().add(t6);
+			Text tKey = new Text("Press \u2190, \u2191, \u2192, \u2193 to move");
+			Text tReset = new Text("Press \"R\" to reset the level");
+			Text tHint = new Text("Press \"H\" to show/hide the solution");
+			tKey.setX(50);
+			tKey.setY(540);
+			tReset.setX(50);
+			tReset.setY(560);
+			tHint.setX(50);
+			tHint.setY(580);
+			tReset.setFont(Font.font("Verdana", 12));
+			tHint.setFont(Font.font("Verdana", 12));
+			tKey.setFont(Font.font("Verdana", 12));
+			root.getChildren().add(tReset);
+			root.getChildren().add(tHint);
+			root.getChildren().add(tKey);
 		}
 	}
 
@@ -179,6 +180,25 @@ public class ImpasseGame {
 		cheatText.setFont(Font.font("Verdana", 12));
 		cheatText.setVisible(false);
 		root.getChildren().add(cheatText);
+	}
+	
+	/**
+	 * Print the winning message
+	 */
+	private void writeWinMessage() {
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(12.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+		winText = new Text();
+		winText.setEffect(ds);
+		winText.setX(80.0f);
+		winText.setY(300.0f);
+		winText.setFill(Color.RED);
+		winText.setText("Congratulations!");
+		winText.setFont(Font.font("Serif", 68));
+		root.getChildren().add(winText);
+		winText.setVisible(false);
 	}
 	
 	private void drawNextButton() {
@@ -198,14 +218,14 @@ public class ImpasseGame {
 		ds.setOffsetY(8.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
 
-		Text t = new Text();
-		t.setEffect(ds);
-		t.setX(90.0f);
-		t.setY(170.0f);
-		t.setFill(Color.RED);
-		t.setText("IMPASSE");
-		t.setFont(Font.font(null, FontWeight.BOLD, 90));
-		root.getChildren().add(t);
+		Text tTitle = new Text();
+		tTitle.setEffect(ds);
+		tTitle.setX(90.0f);
+		tTitle.setY(170.0f);
+		tTitle.setFill(Color.RED);
+		tTitle.setText("IMPASSE");
+		tTitle.setFont(Font.font(null, FontWeight.BOLD, 90));
+		root.getChildren().add(tTitle);
 
 		buttonBegin = new Button("New Game");
 		buttonBegin.setLayoutX(260);
@@ -218,6 +238,8 @@ public class ImpasseGame {
 
 	/**
 	 * Map setup of level 1 Sol: O
+	 * 
+	 * NOTE: In each level setup, 
 	 */
 	public void level1() {
 
@@ -550,6 +572,21 @@ public class ImpasseGame {
 		setBall(300, 350);
 		setDest(150, 150);
 		
+		Text t1 = new Text("CAUTION: When a door opens...");
+		t1.setX(205);
+		t1.setY(260);
+		t1.setScaleX(0.9);
+		t1.setScaleY(0.9);
+		t1.setFill(Color.GREEN);
+		root.getChildren().add(t1);
+		Text t2 = new Text("...the portal on it disappears too");
+		t2.setX(205);
+		t2.setY(460);
+		t2.setScaleX(0.9);
+		t2.setScaleY(0.9);
+		t2.setFill(Color.GREEN);
+		root.getChildren().add(t2);
+		
 		levelName.setText("The Connection");
 		levelName.setX(225);
 		
@@ -686,7 +723,7 @@ public class ImpasseGame {
 			if (touchedDest()) {
 				myBall.setCenterX(myBall.getCenterX() - KEY_INPUT_SPEED);
 				buttonLevel.setVisible(true);
-				winMessage();
+				showWinMessage();
 			}
 			break;
 		case LEFT:
@@ -699,7 +736,7 @@ public class ImpasseGame {
 			if (touchedDest()) {
 				myBall.setCenterX(myBall.getCenterX() + KEY_INPUT_SPEED);
 				buttonLevel.setVisible(true);
-				winMessage();
+				showWinMessage();
 			}
 			break;
 		case UP:
@@ -712,7 +749,7 @@ public class ImpasseGame {
 			if (touchedDest()) {
 				myBall.setCenterY(myBall.getCenterY() + KEY_INPUT_SPEED);
 				buttonLevel.setVisible(true);
-				winMessage();
+				showWinMessage();
 			}
 			break;
 		case DOWN:
@@ -725,29 +762,11 @@ public class ImpasseGame {
 			if (touchedDest()) {
 				myBall.setCenterY(myBall.getCenterY() - KEY_INPUT_SPEED);
 				buttonLevel.setVisible(true);
-				winMessage();
+				showWinMessage();
 			}
 			break;
 		default:
 		}
-	}
-
-	/**
-	 * Print the winning message
-	 */
-	private void winMessage() {
-		DropShadow ds = new DropShadow();
-		ds.setOffsetY(12.0f);
-		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-
-		t3 = new Text();
-		t3.setEffect(ds);
-		t3.setX(80.0f);
-		t3.setY(300.0f);
-		t3.setFill(Color.RED);
-		t3.setText("Congratulations!");
-		t3.setFont(Font.font("Serif", 68));
-		root.getChildren().add(t3);
 	}
 	
 	/**
@@ -756,6 +775,7 @@ public class ImpasseGame {
 	private void reset() {
 		myBall.setVisible(false);
 		setBall(ballInitX, ballInitY);
+		winText.setVisible(false);
 		
 		for (Portal p : myPortal) {
 			if (p.count == 1) {
@@ -766,6 +786,13 @@ public class ImpasseGame {
 		}
 	}
 
+	/**
+	 * show the "Congratulation!" message
+	 */
+	private void showWinMessage() {
+		winText.setVisible(true);
+	}
+	
 	/**
 	 * show the solution
 	 */
