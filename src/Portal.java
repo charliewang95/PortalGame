@@ -95,7 +95,7 @@ public class Portal {
 		for (Door d : allMyDoor) {
 			d.isVisible = !d.isVisible;
 			d.myDoor.setVisible(d.isVisible);
-			for (Portal p : d.myList) {
+			for (Portal p : d.myList) { //if there are portals on the door, make it disappear too
 				p.h1.rec.setVisible(!p.h1.rec.isVisible());
 				p.h2.rec.setVisible(!p.h2.rec.isVisible());
 			}
