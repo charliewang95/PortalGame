@@ -16,10 +16,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /**
- * Game class
- * NOTE: some magic numbers in the level setup methods (level0-level8) are 
- * 		obtained after multiple trials and error. Now all the objects are at 
- * 		the perfect spot. 
+ * Game class. When called, set the scene for the required level. 
+ * To go to the next level, press the next level button, and the control will give back to the 
+ * Main class to transit scenes.
+ * 
+ * NOTE:Some magic numbers in the level setup methods (level0-level8) are 
+ * 		obtained after multiple trials and error. Although its a violation of the checklist rules, 
+ *      I can't think of a way to efficiently represent all the specific locations in variable names.
+ *      Now all the objects are at the perfect spot. 
  * 
  * @author Charlie Wang
  * 
@@ -41,7 +45,7 @@ public class ImpasseGame {
 	private Group root;
 
 	public Button buttonLevel, buttonBegin, buttonReset;
-	private Text winText, hintText, cheatText, levelName;
+	private Text winText, solutionText, cheatText, levelName;
 
 	/**
 	 * @return the title of the game
@@ -54,7 +58,6 @@ public class ImpasseGame {
 	 * Initialize the board, draws the map, walls, portals, doors, and balls
 	 */
 	public Scene init(int width, int height, int level) {
-
 		myLevel = level;
 		myWall.clear();
 		myPortal.clear();
@@ -145,12 +148,12 @@ public class ImpasseGame {
 	}
 
 	private void writeSolutionText() {
-		hintText = new Text();
-		hintText.setX(40);
-		hintText.setY(40);
-		hintText.setFont(Font.font("Verdana", 12));
-		hintText.setVisible(false);
-		root.getChildren().add(hintText);
+		solutionText = new Text();
+		solutionText.setX(40);
+		solutionText.setY(40);
+		solutionText.setFont(Font.font("Verdana", 12));
+		solutionText.setVisible(false);
+		root.getChildren().add(solutionText);
 	}
 
 	private void writeHelpText() {
@@ -242,7 +245,12 @@ public class ImpasseGame {
 	 * NOTE: In each level setup, 
 	 */
 	public void level1() {
-
+		/*
+		 * The procedure for each level setup method are similar, so
+		 * only this method has comments.
+		 */
+		
+		//draw walls
 		myWall.add(new Rectangle(150, 250, 300, 5));
 		myWall.add(new Rectangle(150, 350, 300, 5));
 		myWall.add(new Rectangle(150, 250, 5, 100));
@@ -250,9 +258,11 @@ public class ImpasseGame {
 		myWall.add(new Rectangle(275, 250, 20, 100));
 		myWall.add(new Rectangle(310, 250, 20, 105));
 
+		//add portals and doors
 		Portal portal1 = new Portal(270, 280, 325, 280, 1, 1, Color.ORANGE, 255, 300, 350, 300);
 		myPortal.add(portal1);
 
+		//write hints
 		Text t1 = new Text("A portal wil transport you to another place...");
 		t1.setX(160);
 		t1.setY(180);
@@ -261,13 +271,16 @@ public class ImpasseGame {
 		t1.setFill(Color.GREEN);
 		root.getChildren().add(t1);
 
+		//set level names
 		levelName.setText("The Portal");
 		levelName.setX(253);
 
+		//set player location and destination location
 		setBall(175, 300);
 		setDest(425, 300);
 		
-		hintText.setText("Solution: Orange");
+		//show solution
+		solutionText.setText("Solution: Orange");
 	}
 
 	/**
@@ -316,7 +329,7 @@ public class ImpasseGame {
 		setBall(150, 200);
 		setDest(250, 450);
 		
-		hintText.setText("Solution: Purple -> \nGreen -> Blue");
+		solutionText.setText("Solution: Purple -> \nGreen -> Blue");
 	}
 
 	/**
@@ -340,7 +353,7 @@ public class ImpasseGame {
 		setBall(300, 400);
 		setDest(200, 400);
 		
-		hintText.setText("Solution: Orange");
+		solutionText.setText("Solution: Orange");
 
 		Text t1 = new Text("When you pass \nthrough a portal...");
 		t1.setX(360);
@@ -395,7 +408,7 @@ public class ImpasseGame {
 		setBall(450, 450);
 		setDest(150, 450);
 		
-		hintText.setText("Solution: Blue -> \nLeft Orange -> Blue");
+		solutionText.setText("Solution: Blue -> \nLeft Orange -> Blue");
 	}
 
 	/**
@@ -433,7 +446,7 @@ public class ImpasseGame {
 		setBall(400, 175);
 		setDest(303, 300);
 		
-		hintText.setText("Solution: Orange -> \nRight Orange -> Blue -> \nUpper Blue -> Pink -> \nLeft Pink");
+		solutionText.setText("Solution: Orange -> \nRight Orange -> Blue -> \nUpper Blue -> Pink -> \nLeft Pink");
 	}
 
 	/**
@@ -485,7 +498,7 @@ public class ImpasseGame {
 		setBall(150, 150);
 		setDest(308, 300);
 		
-		hintText.setText("Solution: Orange -> \nBlue -> Pink -> Grey -> \nPurple -> Blue -> Brown -> \nBlue -> Brown");
+		solutionText.setText("Solution: Orange -> \nBlue -> Pink -> Grey -> \nPurple -> Blue -> Brown -> \nBlue -> Brown");
 
 	}
 
@@ -527,7 +540,7 @@ public class ImpasseGame {
 		setBall(150, 150);
 		setDest(450, 450);
 		
-		hintText.setText("Solution: Pink -> \nOrange -> Cyan -> \nOrange -> Pink -> \nOrange -> Blue");
+		solutionText.setText("Solution: Pink -> \nOrange -> Cyan -> \nOrange -> Pink -> \nOrange -> Blue");
 	}
 
 	/**
@@ -590,7 +603,7 @@ public class ImpasseGame {
 		levelName.setText("The Connection");
 		levelName.setX(225);
 		
-		hintText.setText("Solution: Orange -> \nPink -> Cyan -> Right Orange \n-> Red -> Cyan -> Red -> \nOrange -> Pink -> Cyan");
+		solutionText.setText("Solution: Orange -> \nPink -> Cyan -> Right Orange \n-> Red -> Cyan -> Red -> \nOrange -> Pink -> Cyan");
 	}
 
 	/**
@@ -630,7 +643,7 @@ public class ImpasseGame {
 	}
 
 	/**
-	 * Detect whether the ball has touched the black wall
+	 * @return whether the ball has touched the black wall
 	 */
 	private boolean touchedWall() {
 		if (cheat==true) return false;
@@ -644,7 +657,7 @@ public class ImpasseGame {
 	}
 
 	/**
-	 * Detect whether the ball has touched any colored door (stop)
+	 * @return whether the ball has touched any colored door (stop)
 	 */
 	private boolean touchedDoor() {
 		if (cheat==true) return false;
@@ -660,7 +673,7 @@ public class ImpasseGame {
 	}
 
 	/**
-	 * Detect whether the ball has touched any portal to transport, it also has
+	 * @return whether the ball has touched any portal to transport, it also has
 	 * to touch the wall (go into the portal)
 	 */
 	private boolean touchedPortal() {
@@ -685,7 +698,7 @@ public class ImpasseGame {
 	}
 
 	/**
-	 * Detect whether the player passes the level (reach the destination)
+	 * @return whether the player passes the level (reach the destination)
 	 */
 	private boolean touchedDest() {
 		Shape intersect = Shape.intersect(myBall, myDest);
@@ -695,9 +708,6 @@ public class ImpasseGame {
 		return false;
 	}
 
-	/*
-	 * Available keys: up down left right; H -- solution, R -- reset, P -- Go to next level directly
-	 */
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
 		case I: 
@@ -797,7 +807,7 @@ public class ImpasseGame {
 	 * show the solution
 	 */
 	private void showHint() {
-		this.hintText.setVisible(!this.hintText.isVisible());
+		this.solutionText.setVisible(!this.solutionText.isVisible());
 	}
 
 	public void step(double secondDelay) {

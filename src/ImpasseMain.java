@@ -16,28 +16,30 @@ import javafx.util.Duration;
  * 
  */
 public class ImpasseMain extends Application {
-	private static final int INITLEVEL = 3;  //the beginning level to start the game; use to debug; default-->0
-	public static final int TOTALLEVEL = 8;  //total number of levels
-	public static final int SIZE = 600; //size of the board
+	private static final int INITLEVEL = 3; // the beginning level to start the
+											// game; use to debug; default-->0
+	public static final int ENDLEVEL = 8; // total number of levels
+	public static final int SIZE = 600; // size of the board
 	public static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 100 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 0.1 / FRAMES_PER_SECOND;
 	private Stage myStage;
 	private ImpasseGame[] myGame = new ImpasseGame[20];
 	private int currentLevel;
-	private Scene[] scene = new Scene[TOTALLEVEL+1];
+	private Scene[] scene = new Scene[ENDLEVEL + 1];
 
 	@Override
 	public void start(Stage s) throws Exception {
 		myStage = s;
-		currentLevel=INITLEVEL;
-		for (int i = 0; i <= TOTALLEVEL; i++) {
+		currentLevel = INITLEVEL;
+		//set up each scene; use the same class but different setup methods
+		for (int i = 0; i <= ENDLEVEL; i++) {
 			myGame[i] = new ImpasseGame();
 			s.setTitle(myGame[i].getTitle());
 			scene[i] = myGame[i].init(SIZE, SIZE, i);
-			if (i==0)
+			if (i == 0)
 				myGame[0].buttonBegin.setOnAction(e -> ButtonClicked(e));
-			else 
+			else
 				myGame[i].buttonLevel.setOnAction(e -> ButtonClicked(e));
 		}
 		s.setScene(scene[INITLEVEL]);
@@ -52,7 +54,8 @@ public class ImpasseMain extends Application {
 	}
 
 	public void ButtonClicked(ActionEvent e) {
-		if (currentLevel==8) {
+		// if reached last Level, get out of the game
+		if (currentLevel == ENDLEVEL) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle(null);
 			alert.setHeaderText("You have completed all levels!");
@@ -61,12 +64,13 @@ public class ImpasseMain extends Application {
 			myStage.close();
 			System.exit(0);
 		}
+		// go to the next level
 		if (e.getSource() == myGame[currentLevel].buttonLevel || e.getSource() == myGame[0].buttonBegin) {
 			currentLevel++;
 			myStage.setScene(scene[currentLevel]);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

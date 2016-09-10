@@ -25,26 +25,26 @@ import javafx.scene.shape.Rectangle;
 		public Door(int doorX, int doorY, int length, int width, Color c) {
 			myDoor = new Rectangle(doorX, doorY, length, width);
 			myDoor.setFill(c);
-			if (length>width) {
-				int count=0;
-				while (count+DOTTEDRECLENGTH<length) {
-					Rectangle temp = new Rectangle(doorX+count, doorY, DOTTEDRECLENGTH, width);
-					temp.setFill(c);
-					myFakeDoor.add(temp);
-					count+=2*DOTTEDRECLENGTH;
-				}
-			}
-			else {
-				int count=0;
-				while (count+DOTTEDRECLENGTH<width) {
-					Rectangle temp = new Rectangle(doorX, doorY+count, length, DOTTEDRECLENGTH);
-					temp.setFill(c);
-					myFakeDoor.add(temp);
-					count+=2*DOTTEDRECLENGTH;
-				}
+			
+			//add dotted lines for opened doors using a counter
+			int count=0;
+			while (count+DOTTEDRECLENGTH < ((length>width)?length:width)) {
+				Rectangle temp;
+				if (length>width) 
+					temp = new Rectangle(doorX+count, doorY, DOTTEDRECLENGTH, width);
+				else 
+					temp = new Rectangle(doorX, doorY+count, length, DOTTEDRECLENGTH);
+				temp.setFill(c);
+				myFakeDoor.add(temp);
+				count+=2*DOTTEDRECLENGTH;
 			}
 		}
 		
+		/**
+		 * The method to bond a portal (and its counterpart) to a door;
+		 * when the door opens, the portal on it disappears
+		 * @param port
+		 */
 		public void connectPortal(Portal port) {
 			myList.add(port);
 		}
