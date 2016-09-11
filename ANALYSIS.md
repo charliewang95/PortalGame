@@ -12,13 +12,16 @@ Charlie Wang (qw42)
 
 * The first few days (day 1-3), I was brainstorming about which game genre I'm going to use. Since I'm a huge fan of puzzle games, it is not hard for me to decide on making a puzzle game, both 2D indie games like _Braid_ and 3D puzzle games like _Portal_ and _Talo's Principle_. After settling on a genre, I spent some time (day 4-5) considering what features I'm going to include in this game and its approximate length. That is the time I started and finished DESIGN.txt. Next, I began coding. Based on the Professor Duvall's example "game", I figured I could use 80% of his Main class with just a little change, so the main class doesn't take long. I began writing the game class by starting the _init_ method, and some teaching levels (day 6), then the “soul” of the game, the _Portal_ class (7). Once the portals are correctly set up, making each levels becomes easy. I completed 5 levels quickly (day 8-10). During the rest of time, on average, I completed one level per two days. Besides, I started fixing bugs and adding new features, hints, and cheats. On day 12, I separated the _Door_ class (formerly a subclass in the _Portal_ class) into an individual class, which makes coding and referencing easier. The rest of the time is just debugging and perfecting the quality of the code and comments. 
 
+*
 
-* 
-
+* The easiest part is actually coming up with the algorithms for the game flow. Slightly easier is the algorithms of portals and doors. The hardest part is coming up with deliberate puzzles. At first, I can come up with some easier levels within a day. Later, I usually drew something arbitrarily, and then gradually changed it as I tried to play it. The last two levels took 2-3 days each. The hardest point is not thinking of a level itself, but thinking of a _harder_ level as the level number increases.
 
 ### Commits
 * I made xxx commits in total. 
-* 
+
+* The commit messages are relative clear in showing the whole process. Almost each time I finished a level, I wrote "level x complete". Each time I added a new feature (transition, winning message, background, cheats, etc), I clearly showed the update. I think the message clearly shows my "storyline".
+
+* "Added transitions betwen levels (button)"
 
 ### Conclusions vvv
 
@@ -93,3 +96,10 @@ Charlie Wang (qw42)
 * My current "Go to next level" function is by pressing a button after completing a level (or use cheats, of course). This approach asks the player to do action to go to the next level, so the player can replay this level to find new solutions if they want. However, the button approach (the one I implemented) can be buggy sometimes. If there is another button on the scene, they sometimes have conflicts. This is a problem I have not overcome. Another approach would be going to the next level automatically when the player completes this level. In this way, the player cannot replay this level, but it will increase the fluency of the game play. Because of this reason, I think the second approach is better, but I haven't been able to think of a good way to achieve this.
 
 * The first bug is the button conflict described in the above paragraph; After cheat is activated, the ball might move out of the boarder of the map; if a portal is on a door, the player can go through the portal from the other side of the door, so I had to make the door thicker.
+
+### Code Masterpiece
+
+```java
+
+
+```
