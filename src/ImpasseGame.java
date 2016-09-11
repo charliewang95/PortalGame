@@ -215,7 +215,7 @@ public class ImpasseGame {
 	/**
 	 * Show Main screen
 	 */
-	public void level0() {
+	private void level0() {
 
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(8.0f);
@@ -244,7 +244,7 @@ public class ImpasseGame {
 	 * 
 	 * NOTE: In each level setup, 
 	 */
-	public void level1() {
+	private void level1() {
 		/*
 		 * The procedure for each level setup method are similar, so
 		 * only this method has comments.
@@ -286,7 +286,7 @@ public class ImpasseGame {
 	/**
 	 * Map setup of level 2 Sol: PU-->GR-->BL
 	 */
-	public void level2() {
+	private void level2() {
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -335,7 +335,7 @@ public class ImpasseGame {
 	/**
 	 * Map setup of level 3 Sol: O
 	 */
-	public void level3() {
+	private void level3() {
 
 		myWall.add(new Rectangle(150, 150, 5, 300));
 		myWall.add(new Rectangle(150, 450, 300, 5));
@@ -384,7 +384,7 @@ public class ImpasseGame {
 	/**
 	 * Map setup of level 4 Sol: B-->OL-->B
 	 */
-	public void level4() {
+	private void level4() {
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -414,7 +414,7 @@ public class ImpasseGame {
 	/**
 	 * Map setup of level 5 Sol: O-->OR-->B-->BU-->P-->PL
 	 */
-	public void level5() {
+	private void level5() {
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -452,7 +452,7 @@ public class ImpasseGame {
 	/**
 	 * Map setup of level 6 Sol: O-->BL-->PI-->G-->PU-->BL-->BR-->BL-->BR
 	 */
-	public void level6() {
+	private void level6() {
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -505,7 +505,7 @@ public class ImpasseGame {
 	/**
 	 * Map setup of level 7 Sol: P-->O-->C-->O-->P-->O-->B
 	 */
-	public void level7() {
+	private void level7() {
 
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
@@ -546,7 +546,7 @@ public class ImpasseGame {
 	/**
 	 * Map setup of level 8 Sol: O-->P-->C-->OR-->R-->C-->R-->O-->P-->C
 	 */
-	public void level8() {
+	private void level8() {
 		myWall.add(new Rectangle(100, 100, 5, 400));
 		myWall.add(new Rectangle(100, 500, 405, 5));
 		myWall.add(new Rectangle(100, 100, 400, 5));
@@ -811,6 +811,6 @@ public class ImpasseGame {
 	}
 
 	public void step(double secondDelay) {
-
+		
 	}
 }
