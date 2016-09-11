@@ -20,7 +20,13 @@ Charlie Wang (qw42)
 * I made xxx commits in total. 
 * 
 
-### Conclusions
+### Conclusions vvv
+
+* My estimation of the project is 800 lines. In fact, I have about 1100 lines including all the classes, which is a little bit more than my estimation. Because I'm making a puzzle game, the size of the project depends greatly on how many levels I want to make. This time, each level is taking more space than I thought. To better estimate the size, I will determine the number of levels and the length of each level more properly. 
+
+* The level setup methods require the most editing, because to make deliberate levels, I have to try different map setups and gaming flows, along with small coordinate changes multiple times. This requires I put much effort on setting up each map.
+
+* To be a better designer, I should start writing comments (both on methods and in-line comments, if necessary). This will save me a lot of time, because in this project I added comments after I finished most parts of the codes, so it is relatively hard to remember each detail of each method, making the comments not so useful. I will keep factoring my code into small methods, making each method short to increase readability and fluency.
 
 **Design Review**
 ----
@@ -70,13 +76,15 @@ Charlie Wang (qw42)
 	}
 ```
 
-### Design
+### Design vvv
 
 * Since it's a puzzle game, I intended to make each level a different scene and redraw the stage when going to a new level. The scenes are made beforehand when the program starts so the program can use them directly. When a level is called, initialize all the texts first, even if some of them don't have to show immediately. Then based on which level I'm in, set up the board accordingly by calling the correct method. The key inputs change the position of the player and certain set up of the map (along with other features). When the player succeeded, the "Next Level" button shows up, and when it is pressed, jump to the main class and call the next level, and so on. 
 
 * To add a new level, say level 9, just add a new method _private level9()_ in _ImpasseGame_ and add walls, portals, doors with deliberate coordinates like the other levels. Also remember to add an if statement in _chooseLevel_ method and initialize it in the _start_ method in _ImpasseMain_. The final variable _ENDLEVEL_ might need changing as well. Of course, you need to have a deliberate setup and a solution for this level to work. 
 
-* 
+* As I will mention in the below section, I couldn't find an efficient way to switch scene automatically, so I added a button for the player to press to go to the next level. Therefore, I made all the levels in one class, and when the "switch scene" is called, make a new instance of the same class but with different map setup method. Also, because I have a "reset" feature, I have to store all the initial position of the map and all the elements, and that's why I put these objects in global variables.
+
+* Feature 1: The last (and hardest) level connects a portal with a door, and they appear and disappear together, which has never happened in previous levels. To achieve this, I added an arraylist<Portal> to the _Door_ object and put all the connected portal to this arraylist. Whenever a door changes visibility, the Portal objects in this list also toggles visibility. Feature 2: The reset feature. I added a "count" variable in the _Portal_ class to store whether I have to toggle the visibility of the doors when reseting. When the "R" key is pressed, visibility is toggled according to _count_, the balls are set to invisible and the program draws them again. The winning message is toggled off of the player has already passed the level.  
 
 ### Alternate Designs vvv
 
