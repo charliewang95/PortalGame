@@ -4,9 +4,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
-	 * This class contains a rectangle that can toggle its visibility
-	 *  each time the player enters a portal of the same color
-	 */
+ * This class is part of my code masterpiece
+ * 
+ * This class contains a rectangle that can toggle its visibility
+ *  each time the player enters a portal of the same color
+ * When a door is created, some dotted lines are created as open doors. Therefore, toggling the rectangle will do the
+ *  the trick, instead of having to add dotted lines each time a door opens. This saves a lot of time. 
+ * A door object might be associated with a list of portals, which means these portals are on the door itself. When the door
+ *  opens, the portals in this list toggles visibility as well. This is why Door and Portal are made into two different 
+ *  classes - to avoid conflict.
+ *
+ * @author Charlie Wang
+ *
+ */
 	public class Door {
 		public Rectangle myDoor;
 		public ArrayList<Rectangle> myFakeDoor = new ArrayList<Rectangle>(); //dotted (open) doors

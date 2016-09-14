@@ -5,6 +5,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
+ * This class is part of my code masterpiece
+ * 
+ * This class contains the structure and methods needed for builder portals.
+ * The Portal constructor receives all the parameters needed to know their locations, the exit points, and their pose.
+ * Each Portal contains two HalfPortal (the subclass). The subclass may not be necessary for now, but it might useful when the 
+ *  creator wants to add more feature to the portal. This increases flexibility of this games future improvement.
+ * The portal instance can add a Door object of the same color. There are two ways to add Doors: knowing its location and create a 
+ *  door, or add an existing door. When making a level, the creator can thus do something on the door first, then connect it to
+ *  the portal. This also increases flexibility.  
+ * The toggleVisibility method is called each time the player passes through a portal. the "count" variable stores whether the 
+ *  doors need to be toggled back when the level is being reset. 
+ * The reason why Door class is not made into the Portal class as a subclass is that a door has to associate some portals, 
+ *  as will be described below.
+ *
  * @author charliewang95
  *
  */
