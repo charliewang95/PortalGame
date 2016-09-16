@@ -17,13 +17,16 @@ import javafx.scene.shape.Rectangle;
  * @author Charlie Wang
  *
  */
+	/**
+	 * @author charliewang95
+	 *
+	 */
 	public class Door {
-		public Rectangle myDoor;
-		public ArrayList<Rectangle> myFakeDoor = new ArrayList<Rectangle>(); //dotted (open) doors
-		public boolean isVisible;
-		public boolean initVisible;
+		private Rectangle myDoor;
+		private ArrayList<Rectangle> myFakeDoor = new ArrayList<Rectangle>(); //dotted (open) doors
+		private boolean isVisible;
 		private static final int DOTTEDRECLENGTH = 10;
-		public ArrayList<Portal> myList = new ArrayList<Portal>();
+		private ArrayList<Portal> myList = new ArrayList<Portal>();
 
 		/**
 		 * @param doorX the x coordinates of the door
@@ -57,5 +60,47 @@ import javafx.scene.shape.Rectangle;
 		 */
 		public void connectPortal(Portal port) {
 			myList.add(port);
+		}
+		
+		/**
+		 * @return the rectangle shape
+		 */
+		public Rectangle getDoor() {
+			return myDoor;
+		}
+		
+		/**
+		 * @return the dotted lines
+		 */
+		public ArrayList<Rectangle> getFakeDoor() {
+			return myFakeDoor;
+		}
+		
+		/**
+		 * @return whether the door is visible
+		 */
+		public boolean getVisibility() {
+			return isVisible;
+		}
+		
+		/**
+		 * Change the visibility of the door
+		 */
+		public void toggleVisibility() {
+			isVisible=!isVisible;
+		}
+		
+		/**
+		 * @param visible Sets the visibility of the door
+		 */
+		public void setVisibility(boolean visible) {
+			isVisible=visible;
+		}
+		
+		/**
+		 * @return the portals on this door
+		 */
+		public ArrayList<Portal> getPortal() {
+			return myList;
 		}
 	}

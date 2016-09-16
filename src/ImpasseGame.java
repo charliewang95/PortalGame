@@ -91,11 +91,11 @@ public class ImpasseGame {
 		}
 
 		for (Portal p : myPortal) {
-			root.getChildren().add(p.h1.rec);
-			root.getChildren().add(p.h2.rec);
-			for (Door d : p.allMyDoor) {
-				root.getChildren().add(d.myDoor);
-				root.getChildren().addAll(d.myFakeDoor);
+			root.getChildren().add(p.geth1().getRec());
+			root.getChildren().add(p.geth2().getRec());
+			for (Door d : p.getAllDoors()) {
+				root.getChildren().add(d.getDoor());
+				root.getChildren().addAll(d.getFakeDoor());
 			}
 		}
 		if (myLevel != 0) {
@@ -682,9 +682,9 @@ public class ImpasseGame {
 		if (cheat == true)
 			return false;
 		for (Portal p : myPortal) {
-			for (Door d : p.allMyDoor) {
-				Shape intersect = Shape.intersect(myBall, d.myDoor);
-				if (intersect.getBoundsInLocal().getWidth() != -1 && d.isVisible) {
+			for (Door d : p.getAllDoors()) {
+				Shape intersect = Shape.intersect(myBall, d.getDoor());
+				if (intersect.getBoundsInLocal().getWidth() != -1 && d.getVisibility()) {
 					return true;
 				}
 			}
@@ -700,17 +700,17 @@ public class ImpasseGame {
 		if (cheat == true)
 			return false;
 		for (Portal p : myPortal) {
-			Shape intersect1 = Shape.intersect(myBall, p.h1.rec);
+			Shape intersect1 = Shape.intersect(myBall, p.geth1().getRec());
 			if (intersect1.getBoundsInLocal().getWidth() != -1) {
-				myBall.setCenterX(p.myExit2X);
-				myBall.setCenterY(p.myExit2Y);
+				myBall.setCenterX(p.getExit2X());
+				myBall.setCenterY(p.getExit2Y());
 				p.toggleVisibility();
 				return true;
 			}
-			Shape intersect2 = Shape.intersect(myBall, p.h2.rec);
+			Shape intersect2 = Shape.intersect(myBall, p.geth2().getRec());
 			if (intersect2.getBoundsInLocal().getWidth() != -1) {
-				myBall.setCenterX(p.myExit1X);
-				myBall.setCenterY(p.myExit1Y);
+				myBall.setCenterX(p.getExit1X());
+				myBall.setCenterY(p.getExit1Y());
 				p.toggleVisibility();
 				return true;
 			}
@@ -809,10 +809,10 @@ public class ImpasseGame {
 		winText.setVisible(false);
 
 		for (Portal p : myPortal) {
-			if (p.count == 1) {
+			if (p.getCount() == 1) {
 				p.toggleVisibility();
-				p.h1.rec.setVisible(true);
-				p.h2.rec.setVisible(true);
+				p.geth1().getRec().setVisible(true);
+				p.geth2().getRec().setVisible(true);
 			}
 		}
 	}

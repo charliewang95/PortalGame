@@ -22,21 +22,25 @@ import javafx.scene.shape.Rectangle;
  * @author charliewang95
  *
  */
+/**
+ * @author charliewang95
+ *
+ */
 public class Portal {
 	private static final int LENGTH = 50;
 	private static final int WIDTH = 10;
-	public int myExit1X, myExit1Y, myExit2X, myExit2Y;
-	public HalfPortal h1, h2;
-	public int count = 0;
-	public Color myColor;
-	public ArrayList<Door> allMyDoor = new ArrayList<Door>();
+	private int myExit1X, myExit1Y, myExit2X, myExit2Y;
+	private HalfPortal h1, h2;
+	private int count = 0;
+	private Color myColor;
+	private ArrayList<Door> allMyDoor = new ArrayList<Door>();
 
 	/**
 	 * This class contains a rectangle that represents a portal. Two halfPortals
 	 * are one complete pair of portals
 	 */
 	public class HalfPortal {
-		public Rectangle rec;
+		private Rectangle rec;
 
 		/**
 		 * @param portX
@@ -53,6 +57,10 @@ public class Portal {
 			int l = (pos == 1) ? LENGTH : WIDTH;
 			rec = new Rectangle(portX, portY, w, l);
 			rec.setFill(c);
+		}
+		
+		public Rectangle getRec() {
+			return rec;
 		}
 	}
 
@@ -107,9 +115,9 @@ public class Portal {
 	public void toggleVisibility() {
 		count = (count == 1) ? 0 : 1;
 		for (Door d : allMyDoor) {
-			d.isVisible = !d.isVisible;
-			d.myDoor.setVisible(d.isVisible);
-			for (Portal p : d.myList) { //if there are portals on the door, make it disappear too
+			d.toggleVisibility();
+			d.getDoor().setVisible(d.getVisibility());
+			for (Portal p : d.getPortal()) { //if there are portals on the door, make it disappear too
 				p.h1.rec.setVisible(!p.h1.rec.isVisible());
 				p.h2.rec.setVisible(!p.h2.rec.isVisible());
 			}
@@ -143,9 +151,64 @@ public class Portal {
 	 *            the visibility of the door
 	 */
 	public void addDoor(Door d1, boolean visible) {
-		d1.myDoor.setVisible(visible);
-		d1.isVisible = visible;
-		d1.initVisible = visible;
+		d1.getDoor().setVisible(visible);
+		d1.setVisibility(visible);
 		allMyDoor.add(d1);
+	}
+	
+	/**
+	 * @return the x-coordinate of the exit point of h1
+	 */
+	public int getExit1X() {
+		return myExit1X;
+	}
+	
+	/**
+	 * @return the y-coordinate of the exit point of h1
+	 */
+	public int getExit1Y() {
+		return myExit1Y;
+	}
+	
+	/**
+	 * @return the x-coordinate of the exit point of h2
+	 */
+	public int getExit2X() {
+		return myExit2X;
+	}
+	
+	/**
+	 * @return the y-coordinate of the exit point of h2
+	 */
+	public int getExit2Y() {
+		return myExit2Y;
+	}
+	
+	/**
+	 * @return the half-portal h1
+	 */
+	public HalfPortal geth1() {
+		return h1;
+	}
+	
+	/**
+	 * @return the half-portal h2
+	 */
+	public HalfPortal geth2() {
+		return h2;
+	}
+	
+	/**
+	 * @return the number of times the portal is passed
+	 */
+	public int getCount() {
+		return count;
+	}
+	
+	/**
+	 * @return the doors associated with the portal
+	 */
+	public ArrayList<Door> getAllDoors() {
+		return allMyDoor;
 	}
 }
