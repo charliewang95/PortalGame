@@ -1,11 +1,6 @@
 game
 ====
 
-First project for CompSci 308 Fall 2016
-----
-
-* Project participants: Charlie Wang (qw42)
-* Working period: 8/27 - 9/10; 25 hours in total
 * Role: Design the game; implement all the codes; write analysis
 * Resources used: 
  * [Javadoc](http://docs.oracle.com/javafx/2/text/jfxpub-text.htm)
